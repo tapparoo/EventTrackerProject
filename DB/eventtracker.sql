@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `height_in_inches` DECIMAL(3,1) NULL,
   `weight_in_pounds` DECIMAL(4,1) NULL,
   `age` INT NULL,
-  `bmi` DECIMAL(3,1) NULL,
   `active` TINYINT UNSIGNED NOT NULL DEFAULT 1,
   `admin` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
@@ -43,11 +42,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `group`
+-- Table `usergroup`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `group` ;
+DROP TABLE IF EXISTS `usergroup` ;
 
-CREATE TABLE IF NOT EXISTS `group` (
+CREATE TABLE IF NOT EXISTS `usergroup` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` INT UNSIGNED NOT NULL,
   `name` VARCHAR(255) NOT NULL,
@@ -57,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `group` (
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_user_idx` (`user_id` ASC),
-  CONSTRAINT `fk_user_group`
+  CONSTRAINT `fk_user_usergroup`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
@@ -116,17 +115,17 @@ DROP TABLE IF EXISTS `user_group` ;
 
 CREATE TABLE IF NOT EXISTS `user_group` (
   `user_id` INT UNSIGNED NOT NULL,
-  `group_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`user_id`, `group_id`),
-  INDEX `fk_group_idx` (`group_id` ASC),
+  `usergroup_id` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`user_id`, `usergroup_id`),
+  INDEX `fk_group_idx` (`usergroup_id` ASC),
   CONSTRAINT `fk_user_group_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_group_group`
-    FOREIGN KEY (`group_id`)
-    REFERENCES `group` (`id`)
+  CONSTRAINT `fk_user_usergroup_group`
+    FOREIGN KEY (`usergroup_id`)
+    REFERENCES `usergroup` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -138,16 +137,16 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `group_event` ;
 
 CREATE TABLE IF NOT EXISTS `group_event` (
-  `group_id` INT UNSIGNED NOT NULL,
+  `usergroup_id` INT UNSIGNED NOT NULL,
   `event_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`group_id`, `event_id`),
+  PRIMARY KEY (`usergroup_id`, `event_id`),
   INDEX `fk_event_idx` (`event_id` ASC),
-  CONSTRAINT `fk_group_event_group`
-    FOREIGN KEY (`group_id`)
-    REFERENCES `group` (`id`)
+  CONSTRAINT `fk_usergroup_event_usergroup`
+    FOREIGN KEY (`usergroup_id`)
+    REFERENCES `usergroup` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_group_event_event`
+  CONSTRAINT `fk_usergroup_event_event`
     FOREIGN KEY (`event_id`)
     REFERENCES `event` (`id`)
     ON DELETE NO ACTION
@@ -161,16 +160,16 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `group_comment` ;
 
 CREATE TABLE IF NOT EXISTS `group_comment` (
-  `group_id` INT UNSIGNED NOT NULL,
+  `usergroup_id` INT UNSIGNED NOT NULL,
   `comment_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`group_id`, `comment_id`),
+  PRIMARY KEY (`usergroup_id`, `comment_id`),
   INDEX `fk_comment_idx` (`comment_id` ASC),
-  CONSTRAINT `fk_group_comment_group`
-    FOREIGN KEY (`group_id`)
-    REFERENCES `group` (`id`)
+  CONSTRAINT `fk_usergroup_comment_usergroup`
+    FOREIGN KEY (`usergroup_id`)
+    REFERENCES `usergroup` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_group_comment_comment`
+  CONSTRAINT `fk_usergroup_comment_comment`
     FOREIGN KEY (`comment_id`)
     REFERENCES `comment` (`id`)
     ON DELETE NO ACTION
@@ -200,12 +199,6 @@ CREATE TABLE IF NOT EXISTS `event_comment` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-SET SQL_MODE = '';
-DROP USER IF EXISTS user@localhost;
-SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-CREATE USER 'user'@'localhost' IDENTIFIED BY 'user';
-
-GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'user'@'localhost';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -216,26 +209,26 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `eventtracker`;
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `bmi`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Adam', 'Tappy', 'admin', 'admin', 'wut@wut@gmail.com', 69, 169, 69, NULL, 1, 1, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `bmi`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Some', 'Guy', 'sumguy', 'heythere', 'sum@guy.com', 75, 175, 55, NULL, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `bmi`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Some', 'Gal', 'sumgal', 'heyback', 'sum@gal.com', 88, 288, 44, NULL, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `bmi`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Peter', 'Piper', 'PickedA', 'PeckOf', 'pickled@peppers.com', 87, 299, 33, NULL, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `bmi`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Hickory', 'Dickory', 'Dock', 'themouse', 'wentup@theclock.com', NULL, NULL, 22, NULL, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `bmi`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Three', 'Blind', 'Mice', 'seeHow', 'they@run.com', NULL, NULL, 21, NULL, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `bmi`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'There', 'WasAn', 'oldlady', 'wholived', 'ina@shoe.com', NULL, NULL, 20, NULL, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Adam', 'Tappy', 'admin', 'admin', 'wut@wut@gmail.com', 69, 169, 69, 1, 1, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Some', 'Guy', 'sumguy', 'heythere', 'sum@guy.com', 75, 175, 55, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Some', 'Gal', 'sumgal', 'heyback', 'sum@gal.com', 88, 288, 44, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Peter', 'Piper', 'PickedA', 'PeckOf', 'pickled@peppers.com', 87, 299, 33, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Hickory', 'Dickory', 'Dock', 'themouse', 'wentup@theclock.com', NULL, NULL, 22, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Three', 'Blind', 'Mice', 'seeHow', 'they@run.com', NULL, NULL, 21, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'There', 'WasAn', 'oldlady', 'wholived', 'ina@shoe.com', NULL, NULL, 20, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `group`
+-- Data for table `usergroup`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `eventtracker`;
-INSERT INTO `group` (`id`, `user_id`, `name`, `description`, `active`, `created_at`, `updated_at`) VALUES (DEFAULT, 2, 'The Dream Team', 'We can do it!', 1, '2019-03-20 14:33:58', '2019-03-20 14:33:58');
-INSERT INTO `group` (`id`, `user_id`, `name`, `description`, `active`, `created_at`, `updated_at`) VALUES (DEFAULT, 3, 'Big Boyz', '(Soon to be \'Not So Big Boyz\')', 1, '2019-03-20 14:33:58', '2019-03-20 14:33:58');
-INSERT INTO `group` (`id`, `user_id`, `name`, `description`, `active`, `created_at`, `updated_at`) VALUES (DEFAULT, 4, 'Cupcakes', 'J/K.  Fat/sugar-free cupcakes only....', 1, '2019-03-20 14:33:58', '2019-03-20 14:33:58');
-INSERT INTO `group` (`id`, `user_id`, `name`, `description`, `active`, `created_at`, `updated_at`) VALUES (DEFAULT, 5, 'Army of One', 'I don\'t need no teammates', 1, '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `usergroup` (`id`, `user_id`, `name`, `description`, `active`, `created_at`, `updated_at`) VALUES (DEFAULT, 2, 'The Dream Team', 'We can do it!', 1, '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `usergroup` (`id`, `user_id`, `name`, `description`, `active`, `created_at`, `updated_at`) VALUES (DEFAULT, 3, 'Big Boyz', '(Soon to be \'Not So Big Boyz\')', 1, '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `usergroup` (`id`, `user_id`, `name`, `description`, `active`, `created_at`, `updated_at`) VALUES (DEFAULT, 4, 'Cupcakes', 'J/K.  Fat/sugar-free cupcakes only....', 1, '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `usergroup` (`id`, `user_id`, `name`, `description`, `active`, `created_at`, `updated_at`) VALUES (DEFAULT, 5, 'Army of One', 'I don\'t need no teammates', 1, '2019-03-20 14:33:58', '2019-03-20 14:33:58');
 
 COMMIT;
 
@@ -272,16 +265,16 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `eventtracker`;
-INSERT INTO `user_group` (`user_id`, `group_id`) VALUES (2, 1);
-INSERT INTO `user_group` (`user_id`, `group_id`) VALUES (3, 1);
-INSERT INTO `user_group` (`user_id`, `group_id`) VALUES (4, 1);
-INSERT INTO `user_group` (`user_id`, `group_id`) VALUES (4, 2);
-INSERT INTO `user_group` (`user_id`, `group_id`) VALUES (5, 2);
-INSERT INTO `user_group` (`user_id`, `group_id`) VALUES (3, 2);
-INSERT INTO `user_group` (`user_id`, `group_id`) VALUES (4, 3);
-INSERT INTO `user_group` (`user_id`, `group_id`) VALUES (5, 3);
-INSERT INTO `user_group` (`user_id`, `group_id`) VALUES (6, 3);
-INSERT INTO `user_group` (`user_id`, `group_id`) VALUES (7, 4);
+INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (2, 1);
+INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (3, 1);
+INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (4, 1);
+INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (4, 2);
+INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (5, 2);
+INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (3, 2);
+INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (4, 3);
+INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (5, 3);
+INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (6, 3);
+INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (7, 4);
 
 COMMIT;
 
@@ -291,13 +284,13 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `eventtracker`;
-INSERT INTO `group_event` (`group_id`, `event_id`) VALUES (1, 1);
-INSERT INTO `group_event` (`group_id`, `event_id`) VALUES (2, 1);
-INSERT INTO `group_event` (`group_id`, `event_id`) VALUES (2, 2);
-INSERT INTO `group_event` (`group_id`, `event_id`) VALUES (3, 2);
-INSERT INTO `group_event` (`group_id`, `event_id`) VALUES (4, 2);
-INSERT INTO `group_event` (`group_id`, `event_id`) VALUES (1, 3);
-INSERT INTO `group_event` (`group_id`, `event_id`) VALUES (3, 3);
+INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (1, 1);
+INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (2, 1);
+INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (2, 2);
+INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (3, 2);
+INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (4, 2);
+INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (1, 3);
+INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (3, 3);
 
 COMMIT;
 
@@ -307,7 +300,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `eventtracker`;
-INSERT INTO `group_comment` (`group_id`, `comment_id`) VALUES (1, 2);
+INSERT INTO `group_comment` (`usergroup_id`, `comment_id`) VALUES (1, 2);
 
 COMMIT;
 
@@ -320,3 +313,4 @@ USE `eventtracker`;
 INSERT INTO `event_comment` (`event_id`, `comment_id`) VALUES (1, 3);
 
 COMMIT;
+

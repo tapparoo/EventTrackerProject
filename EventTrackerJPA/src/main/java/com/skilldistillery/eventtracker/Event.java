@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,7 +27,9 @@ public class Event {
 	private String description;
 	private boolean active;
 	
-	// creator/admin of this group
+	// creator/admin of this event
+	@ManyToOne
+	@JoinColumn(name="user_id")
 	private User user;
 	private Date date;
 	
@@ -40,7 +43,7 @@ public class Event {
 	@JoinTable(name="group_event",
 			joinColumns=@JoinColumn(name="event_id"),
 			inverseJoinColumns=@JoinColumn(name="group_id"))
-		private List<Group> groups;
+		private List<Usergroup> usergroups;
 	
 	@Column(name = "created_at")
 	@CreationTimestamp
@@ -106,12 +109,12 @@ public class Event {
 		this.comments = comments;
 	}
 
-	public List<Group> getGroups() {
-		return groups;
+	public List<Usergroup> getGroups() {
+		return usergroups;
 	}
 
-	public void setGroups(List<Group> groups) {
-		this.groups = groups;
+	public void setGroups(List<Usergroup> usergroups) {
+		this.usergroups = usergroups;
 	}
 
 	public Date getCreatedAt() {
@@ -155,7 +158,7 @@ public class Event {
 	@Override
 	public String toString() {
 		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", active=" + active + ", user="
-				+ user + ", date=" + date + ", comments=" + comments + ", groups=" + groups + ", createdAt=" + createdAt
+				+ user + ", date=" + date + ", comments=" + comments + ", groups=" + usergroups + ", createdAt=" + createdAt
 				+ ", updatedAt=" + updatedAt + "]";
 	}
 }

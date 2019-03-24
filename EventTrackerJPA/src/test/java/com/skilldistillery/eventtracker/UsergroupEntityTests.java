@@ -16,12 +16,12 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Comment Entity Tests")
-class CommentEntityTests {
+@DisplayName("Usergroup Entity Tests")
+class UsergroupEntityTests {
 
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Comment comment;
+	private Usergroup group;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -36,26 +36,27 @@ class CommentEntityTests {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		comment = em.find(Comment.class, 1);
+		group = em.find(Usergroup.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		comment = null;
+		group = null;
 	}
 
-//	select * from comment where id = 1;
-//	+----+---------+---------------------+--------+
-//	| id | user_id | comment             | active |
-//	+----+---------+---------------------+--------+
-//	|  1 |       1 | Good luck everyone! |      1 |
-//	+----+---------+---------------------+--------+
+//	select * from eventtracker.group where id = 1;
+//	+----+---------+----------------+---------------+--------+---------------------+---------------------+
+//	| id | user_id | name           | description   | active | created_at          | updated_at          |
+//	+----+---------+----------------+---------------+--------+---------------------+---------------------+
+//	|  1 |       2 | The Dream Team | We can do it! |      1 | 2019-03-20 14:33:58 | 2019-03-20 14:33:58 |
+//	+----+---------+----------------+---------------+--------+---------------------+---------------------+
 	
 	@Test
-	void test_Comment_entity_mappings() {
-		assertEquals("Good luck everyone!", comment.getComment());
-		assertTrue(comment.isActive());
+	void test_Group_entity_mappings() {
+		assertEquals("The Dream Team", group.getName());
+		assertEquals("We can do it!", group.getDescription());
+		assertTrue(group.isActive());
 	}
 	
 	@Disabled

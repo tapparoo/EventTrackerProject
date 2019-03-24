@@ -9,14 +9,14 @@
     </provider>
 
 	<class>com.skilldistillery.eventtracker.User</class>
-	<class>com.skilldistillery.eventtracker.Group</class>
+	<class>com.skilldistillery.eventtracker.Usergroup</class>
 	<class>com.skilldistillery.eventtracker.Event</class>
 	<class>com.skilldistillery.eventtracker.Comment</class>
 
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/eventtrackerdb?useSSL=false" />
-      <property name="javax.persistence.jdbc.user" value="eventuser"/>
-      <property name="javax.persistence.jdbc.password" value="eventuser" />
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/eventtracker?useSSL=false" />
+      <property name="javax.persistence.jdbc.user" value="event_user"/>
+      <property name="javax.persistence.jdbc.password" value="event_user" />
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 
       <property name="hibernate.show_sql" value="false" />

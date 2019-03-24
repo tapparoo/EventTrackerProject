@@ -28,9 +28,11 @@ public class User {
 	private String username;
 	private String password;
 	private String email;
+	private int age;
+	@Column(name="height_in_inches")
 	private double heightInInches;
+	@Column(name="weight_in_pounds")
 	private double weightInPounds;
-	private double bmi;
 	private boolean active;
 	private boolean admin;
 
@@ -50,7 +52,7 @@ public class User {
 	@JoinTable(name="user_group",
 		joinColumns=@JoinColumn(name="user_id"),
 		inverseJoinColumns=@JoinColumn(name="group_id"))
-	private List<Group> groups;
+	private List<Usergroup> usergroups;
 
 	public int getId() {
 		return id;
@@ -116,17 +118,15 @@ public class User {
 		this.weightInPounds = weightInPounds;
 	}
 
-	public double getBmi() {
-		if(bmi <= 0) {
-			this.setBmi();
+	public String getBmi() {
+		if(weightInPounds > 0 && heightInInches > 0) {
+			return ("" + (weightInPounds / 2.205) / (heightInInches / 39.37)).substring(0, 4);
 		}
-		return bmi;
+		else return "";
 	}
 
 	public void setBmi() {
-		if(weightInPounds > 0 && heightInInches > 0) {
-			this.bmi = (weightInPounds / 2.205) / (heightInInches / 39.37);
-		}
+		
 	}
 
 	public boolean isActive() {
@@ -169,12 +169,21 @@ public class User {
 		this.lastLogin = lastLogin;
 	}
 
-	public List<Group> getGroups() {
-		return groups;
+	public List<Usergroup> getGroups() {
+		return usergroups;
 	}
 
-	public void setGroups(List<Group> groups) {
-		this.groups = groups;
+	public void setGroups(List<Usergroup> usergroups) {
+		this.usergroups = usergroups;
+	}
+	
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	@Override
@@ -202,9 +211,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
-				+ ", password=" + password + ", email=" + email + ", heightInInches=" + heightInInches
-				+ ", weightInPounds=" + weightInPounds + ", bmi=" + bmi + ", active=" + active + ", admin=" + admin
-				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", lastLogin=" + lastLogin + ", groups="
-				+ groups + "]";
+				+ ", password=" + password + ", email=" + email + ", age=" + age + ", heightInInches=" + heightInInches
+				+ ", weightInPounds=" + weightInPounds + ", active=" + active + ", admin=" + admin + ", createdAt="
+				+ createdAt + ", updatedAt=" + updatedAt + ", lastLogin=" + lastLogin + ", groups=" + usergroups + "]";
 	}
 }

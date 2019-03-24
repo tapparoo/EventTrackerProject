@@ -11,13 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-public class Group {
+public class Usergroup {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
@@ -27,6 +28,8 @@ public class Group {
 	private boolean active;
 	
 	// creator/admin of this group
+	@ManyToOne
+	@JoinColumn(name="user_id")
 	private User user;
 	
 	@ManyToMany
@@ -151,7 +154,7 @@ public class Group {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Group other = (Group) obj;
+		Usergroup other = (Usergroup) obj;
 		if (id != other.id)
 			return false;
 		return true;
