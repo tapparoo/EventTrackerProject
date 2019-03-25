@@ -25,7 +25,7 @@ class EventEntityTests {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		emf = Persistence.createEntityManagerFactory("EventTrackerPU");
+		emf = Persistence.createEntityManagerFactory("EventTrackerJPAPU");
 	}
 
 	@AfterAll
@@ -61,7 +61,7 @@ class EventEntityTests {
 	
 	@Test
 	void test_Event_Usergroup_associations() {
-		assertTrue(event.getGroups().size() > 0);
+		assertTrue(event.getUsergroups().size() > 0);
 	}
 	
 	@Test

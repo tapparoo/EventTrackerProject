@@ -25,7 +25,7 @@ class CommentEntityTests {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		emf = Persistence.createEntityManagerFactory("EventTrackerPU");
+		emf = Persistence.createEntityManagerFactory("EventTrackerJPAPU");
 	}
 
 	@AfterAll

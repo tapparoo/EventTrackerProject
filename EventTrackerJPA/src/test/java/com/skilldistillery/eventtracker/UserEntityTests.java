@@ -1,6 +1,5 @@
 package com.skilldistillery.eventtracker;
 
-import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -26,7 +25,7 @@ class UserEntityTests {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		emf = Persistence.createEntityManagerFactory("EventTrackerPU");
+		emf = Persistence.createEntityManagerFactory("EventTrackerJPAPU");
 	}
 
 	@AfterAll
@@ -60,10 +59,9 @@ class UserEntityTests {
 		assertEquals("admin", user.getUsername());
 		assertEquals("admin", user.getPassword());
 		assertEquals("wut@wut@gmail.com", user.getEmail());
-		assertEquals(69.0, user.getHeightInInches());
-		assertEquals(169.0, user.getWeightInPounds());
+		assertEquals(69.0, user.getHeightInInches().doubleValue());
+		assertEquals(169.0, user.getWeightInPounds().doubleValue());
 		assertEquals(69, user.getAge());
-		assertEquals("43.7", user.getBmi());
 		assertTrue(user.isActive());
 		assertTrue(user.isAdmin());
 	}
@@ -71,7 +69,7 @@ class UserEntityTests {
 	@Test
 	void test_User_Usergroup_association() {
 		User u = em.find(User.class, 4);
-		assertTrue(u.getGroups().size() > 0);
+		assertTrue(u.getUsergroups().size() > 0);
 	}
 	
 	@Disabled

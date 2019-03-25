@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class User {
 	@Id
@@ -30,9 +32,9 @@ public class User {
 	private String email;
 	private int age;
 	@Column(name="height_in_inches")
-	private double heightInInches;
+	private Double heightInInches;
 	@Column(name="weight_in_pounds")
-	private double weightInPounds;
+	private Double weightInPounds;
 	private boolean active;
 	private boolean admin;
 
@@ -48,6 +50,7 @@ public class User {
 	@UpdateTimestamp
 	private Date lastLogin;
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="user_usergroup",
 		joinColumns=@JoinColumn(name="user_id"),
@@ -102,27 +105,20 @@ public class User {
 		this.email = email;
 	}
 
-	public double getHeightInInches() {
+	public Double getHeightInInches() {
 		return heightInInches;
 	}
 
-	public void setHeightInInches(double heightInInches) {
+	public void setHeightInInches(Double heightInInches) {
 		this.heightInInches = heightInInches;
 	}
 
-	public double getWeightInPounds() {
+	public Double getWeightInPounds() {
 		return weightInPounds;
 	}
 
-	public void setWeightInPounds(double weightInPounds) {
+	public void setWeightInPounds(Double weightInPounds) {
 		this.weightInPounds = weightInPounds;
-	}
-
-	public String getBmi() {
-		if(weightInPounds > 0 && heightInInches > 0) {
-			return ("" + (weightInPounds / 2.205) / (heightInInches / 39.37)).substring(0, 4);
-		}
-		else return "";
 	}
 
 	public boolean isActive() {
@@ -165,11 +161,11 @@ public class User {
 		this.lastLogin = lastLogin;
 	}
 
-	public List<Usergroup> getGroups() {
+	public List<Usergroup> getUsergroups() {
 		return usergroups;
 	}
 
-	public void setGroups(List<Usergroup> usergroups) {
+	public void setUsergroups(List<Usergroup> usergroups) {
 		this.usergroups = usergroups;
 	}
 

@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Event {
 	@Id
@@ -33,12 +35,14 @@ public class Event {
 	private User user;
 	private Date date;
 	
+	@JsonIgnore
 	@OneToMany
 	@JoinTable(name="event_comment",
 		joinColumns=@JoinColumn(name="event_id"),
 		inverseJoinColumns=@JoinColumn(name="comment_id"))
 	private List<Comment> comments;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy="events")
 		private List<Usergroup> usergroups;
 	
@@ -106,11 +110,11 @@ public class Event {
 		this.comments = comments;
 	}
 
-	public List<Usergroup> getGroups() {
+	public List<Usergroup> getUsergroups() {
 		return usergroups;
 	}
 
-	public void setGroups(List<Usergroup> usergroups) {
+	public void setUsergroups(List<Usergroup> usergroups) {
 		this.usergroups = usergroups;
 	}
 

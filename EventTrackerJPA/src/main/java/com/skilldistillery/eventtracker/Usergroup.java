@@ -17,34 +17,35 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Usergroup {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private String name;
 	private String description;
 	private boolean active;
-	
+
 	// creator/admin of this group
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
-	
-	@ManyToMany(mappedBy="usergroups")
+
+	@JsonIgnore
+	@ManyToMany(mappedBy = "usergroups")
 	private List<User> users;
-	
+
+	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name="usergroup_event",
-	joinColumns=@JoinColumn(name="usergroup_id"),
-	inverseJoinColumns=@JoinColumn(name="event_id"))
+	@JoinTable(name = "usergroup_event", joinColumns = @JoinColumn(name = "usergroup_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
 	private List<Event> events;
-	
+
+	@JsonIgnore
 	@OneToMany
-	@JoinTable(name="usergroup_comment",
-		joinColumns=@JoinColumn(name="usergroup_id"),
-		inverseJoinColumns=@JoinColumn(name="comment_id"))
+	@JoinTable(name = "usergroup_comment", joinColumns = @JoinColumn(name = "usergroup_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
 	private List<Comment> comments;
 
 	@Column(name = "created_at")
@@ -102,7 +103,7 @@ public class Usergroup {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-	
+
 	public List<Event> getEvents() {
 		return events;
 	}

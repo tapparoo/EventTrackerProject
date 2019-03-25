@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` VARCHAR(25) NOT NULL,
   `password` VARCHAR(200) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
-  `height_in_inches` DECIMAL(3,1) NULL,
-  `weight_in_pounds` DECIMAL(4,1) NULL,
+  `height_in_inches` DECIMAL(3,1) NULL DEFAULT 0,
+  `weight_in_pounds` DECIMAL(4,1) NULL DEFAULT 0,
   `age` INT NULL,
   `active` TINYINT UNSIGNED NOT NULL DEFAULT 1,
   `admin` TINYINT UNSIGNED NOT NULL DEFAULT 0,
@@ -213,9 +213,9 @@ INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `em
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Some', 'Guy', 'sumguy', 'heythere', 'sum@guy.com', 75, 175, 55, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Some', 'Gal', 'sumgal', 'heyback', 'sum@gal.com', 88, 288, 44, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Peter', 'Piper', 'PickedA', 'PeckOf', 'pickled@peppers.com', 87, 299, 33, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Hickory', 'Dickory', 'Dock', 'themouse', 'wentup@theclock.com', NULL, NULL, 22, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Three', 'Blind', 'Mice', 'seeHow', 'they@run.com', NULL, NULL, 21, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'There', 'WasAn', 'oldlady', 'wholived', 'ina@shoe.com', NULL, NULL, 20, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Hickory', 'Dickory', 'Dock', 'themouse', 'wentup@theclock.com', 0, 0, 22, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'Three', 'Blind', 'Mice', 'seeHow', 'they@run.com', 0, 0, 21, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `height_in_inches`, `weight_in_pounds`, `age`, `active`, `admin`, `created_at`, `updated_at`, `last_login`) VALUES (DEFAULT, 'There', 'WasAn', 'oldlady', 'wholived', 'ina@shoe.com', 0, NULL, 20, 1, 0, '2019-03-20 14:33:58', '2019-03-20 14:33:58', '2019-03-20 14:33:58');
 
 COMMIT;
 
