@@ -14,14 +14,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skilldistillery.eventtracker.Comment;
 import com.skilldistillery.eventtracker.Event;
+import com.skilldistillery.eventtracker.services.CommentService;
 import com.skilldistillery.eventtracker.services.EventService;
+import com.skilldistillery.eventtracker.services.UserService;
+import com.skilldistillery.eventtracker.services.UsergroupService;
 
 @RestController
 @RequestMapping("api/events")
 public class EventController {
 	@Autowired
 	private EventService serv;
+	@Autowired
+	private CommentService commentServ;
+	@Autowired
+	private UsergroupService groupServ;
+	@Autowired
+	private UserService userServ;
 	
 	@GetMapping("{id}")
 	public Event getEvent(@PathVariable("id") Integer uid, HttpServletResponse resp) {
@@ -45,6 +55,17 @@ public class EventController {
 		return events;
 	}
 	
+	@GetMapping("{id}/comments")
+	public List<Comment> getEventComments(@PathVariable("id") Integer id, HttpServletResponse resp){
+		List<Comment> comments = serv.findCommentsByEventId(id);
+		if(comments.size() > 0) {
+			resp.setStatus(200);
+		}else {
+			resp.setStatus(404);
+		}
+		return comments;
+	}
+	
 	@PutMapping("{id}")
 	public Event modifiyEvent(@PathVariable("id") Integer id, @RequestBody Event modifiedEvent, HttpServletResponse resp) {
 		modifiedEvent.setId(id);
@@ -66,6 +87,22 @@ public class EventController {
 			resp.setStatus(400);
 		}
 		return event;
+	}
+	
+	@PostMapping("{id}/comments")
+	public Comment addEventComment(@PathVariable("id") Integer eid, @RequestBody Comment comment, HttpServletResponse resp) {
+		// TODO: use session to assign userid
+		int userId = 1;
+		Event event = serv.findEventById(eid);
+		if(event != null) {
+			comment = commentServ.addComment(comment);
+			comment.setUser(userServ.findUserById(userId));
+			event.addComment(comment);
+			resp.setStatus(200);
+		}else {
+			resp.setStatus(404);
+		}
+		return comment;
 	}
 	
 	@DeleteMapping("{id}")

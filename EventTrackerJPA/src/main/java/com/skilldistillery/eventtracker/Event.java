@@ -1,10 +1,12 @@
 package com.skilldistillery.eventtracker;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,7 +38,7 @@ public class Event {
 	private Date date;
 	
 	@JsonIgnore
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="event_comment",
 		joinColumns=@JoinColumn(name="event_id"),
 		inverseJoinColumns=@JoinColumn(name="comment_id"))
@@ -54,6 +56,32 @@ public class Event {
 	@UpdateTimestamp
 	private Date updatedAt;
 
+	public void addComment(Comment comment) {
+		if (comments == null) comments = new ArrayList<>();
+		if (!comments.contains(comment)) {
+			comments.add(comment);
+		}
+	}
+	
+	public void removeComment(Comment comment) {
+		if (comments != null && comments.contains(comment)) {
+			comments.remove(comment);
+		}
+	}
+	
+	public void addUsergroup(Usergroup usergroup) {
+		if (usergroup == null) usergroups = new ArrayList<>();
+		if (!usergroups.contains(usergroup)) {
+			usergroups.add(usergroup);
+		}
+	}
+
+	public void removeUsergroup(Usergroup usergroup) {
+		if (usergroups != null && usergroups.contains(usergroup)) {
+			usergroups.remove(usergroup);
+	}
+}
+	
 	public int getId() {
 		return id;
 	}
