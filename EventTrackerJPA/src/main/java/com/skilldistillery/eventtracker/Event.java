@@ -39,10 +39,7 @@ public class Event {
 		inverseJoinColumns=@JoinColumn(name="comment_id"))
 	private List<Comment> comments;
 	
-	@ManyToMany
-	@JoinTable(name="group_event",
-			joinColumns=@JoinColumn(name="event_id"),
-			inverseJoinColumns=@JoinColumn(name="group_id"))
+	@ManyToMany(mappedBy="events")
 		private List<Usergroup> usergroups;
 	
 	@Column(name = "created_at")
@@ -158,7 +155,6 @@ public class Event {
 	@Override
 	public String toString() {
 		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", active=" + active + ", user="
-				+ user + ", date=" + date + ", comments=" + comments + ", groups=" + usergroups + ", createdAt=" + createdAt
-				+ ", updatedAt=" + updatedAt + "]";
+				+ user + ", date=" + date + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
 }

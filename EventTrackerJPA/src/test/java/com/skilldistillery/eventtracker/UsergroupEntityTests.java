@@ -53,10 +53,25 @@ class UsergroupEntityTests {
 //	+----+---------+----------------+---------------+--------+---------------------+---------------------+
 	
 	@Test
-	void test_Group_entity_mappings() {
+	void test_Usergroup_entity_mappings() {
 		assertEquals("The Dream Team", group.getName());
 		assertEquals("We can do it!", group.getDescription());
 		assertTrue(group.isActive());
+	}
+	
+	@Test
+	void test_Usergroup_User_associations() {
+		assertTrue(group.getUsers().size() > 0);
+	}
+	
+	@Test
+	void test_Usergroup_Event_associations() {
+		assertTrue(group.getUsers().size() > 0);
+	}
+	
+	@Test 
+	void test_Usergroup_Comment_associations() {
+		assertTrue(group.getComments().size() > 0);
 	}
 	
 	@Disabled

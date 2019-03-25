@@ -59,6 +59,16 @@ class EventEntityTests {
 		assertTrue(event.isActive());
 	}
 	
+	@Test
+	void test_Event_Usergroup_associations() {
+		assertTrue(event.getGroups().size() > 0);
+	}
+	
+	@Test
+	void test_Event_EventComments_associations() {
+		assertTrue(event.getComments().size() > 0);
+	}
+	
 	@Disabled
 	@Test
 	void test() {

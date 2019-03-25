@@ -1,5 +1,6 @@
 package com.skilldistillery.eventtracker;
 
+import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -65,6 +66,12 @@ class UserEntityTests {
 		assertEquals("43.7", user.getBmi());
 		assertTrue(user.isActive());
 		assertTrue(user.isAdmin());
+	}
+	
+	@Test
+	void test_User_Usergroup_association() {
+		User u = em.find(User.class, 4);
+		assertTrue(u.getGroups().size() > 0);
 	}
 	
 	@Disabled

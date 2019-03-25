@@ -49,9 +49,9 @@ public class User {
 	private Date lastLogin;
 	
 	@ManyToMany
-	@JoinTable(name="user_group",
+	@JoinTable(name="user_usergroup",
 		joinColumns=@JoinColumn(name="user_id"),
-		inverseJoinColumns=@JoinColumn(name="group_id"))
+		inverseJoinColumns=@JoinColumn(name="usergroup_id"))
 	private List<Usergroup> usergroups;
 
 	public int getId() {
@@ -125,10 +125,6 @@ public class User {
 		else return "";
 	}
 
-	public void setBmi() {
-		
-	}
-
 	public boolean isActive() {
 		return active;
 	}
@@ -176,7 +172,6 @@ public class User {
 	public void setGroups(List<Usergroup> usergroups) {
 		this.usergroups = usergroups;
 	}
-	
 
 	public int getAge() {
 		return age;
@@ -213,6 +208,6 @@ public class User {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
 				+ ", password=" + password + ", email=" + email + ", age=" + age + ", heightInInches=" + heightInInches
 				+ ", weightInPounds=" + weightInPounds + ", active=" + active + ", admin=" + admin + ", createdAt="
-				+ createdAt + ", updatedAt=" + updatedAt + ", lastLogin=" + lastLogin + ", groups=" + usergroups + "]";
+				+ createdAt + ", updatedAt=" + updatedAt + ", lastLogin=" + lastLogin + "]";
 	}
 }

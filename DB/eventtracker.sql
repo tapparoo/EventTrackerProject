@@ -109,11 +109,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `user_group`
+-- Table `user_usergroup`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_group` ;
+DROP TABLE IF EXISTS `user_usergroup` ;
 
-CREATE TABLE IF NOT EXISTS `user_group` (
+CREATE TABLE IF NOT EXISTS `user_usergroup` (
   `user_id` INT UNSIGNED NOT NULL,
   `usergroup_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`user_id`, `usergroup_id`),
@@ -132,11 +132,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `group_event`
+-- Table `usergroup_event`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `group_event` ;
+DROP TABLE IF EXISTS `usergroup_event` ;
 
-CREATE TABLE IF NOT EXISTS `group_event` (
+CREATE TABLE IF NOT EXISTS `usergroup_event` (
   `usergroup_id` INT UNSIGNED NOT NULL,
   `event_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`usergroup_id`, `event_id`),
@@ -155,11 +155,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `group_comment`
+-- Table `usergroup_comment`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `group_comment` ;
+DROP TABLE IF EXISTS `usergroup_comment` ;
 
-CREATE TABLE IF NOT EXISTS `group_comment` (
+CREATE TABLE IF NOT EXISTS `usergroup_comment` (
   `usergroup_id` INT UNSIGNED NOT NULL,
   `comment_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`usergroup_id`, `comment_id`),
@@ -255,52 +255,53 @@ INSERT INTO `comment` (`id`, `user_id`, `comment`, `active`) VALUES (DEFAULT, 1,
 INSERT INTO `comment` (`id`, `user_id`, `comment`, `active`) VALUES (DEFAULT, 2, 'Lost 10 lbs in a week!', 1);
 INSERT INTO `comment` (`id`, `user_id`, `comment`, `active`) VALUES (DEFAULT, 2, 'Nice job!', 1);
 INSERT INTO `comment` (`id`, `user_id`, `comment`, `active`) VALUES (DEFAULT, 3, 'Let\'s go team!  35 lbs to go!', 1);
-INSERT INTO `comment` (`id`, `user_id`, `comment`, `active`) VALUES (DEFAULT, 3, 'Motivational comment', DEFAULT);
+INSERT INTO `comment` (`id`, `user_id`, `comment`, `active`) VALUES (DEFAULT, 3, 'Motivational comment', 1);
+INSERT INTO `comment` (`id`, `user_id`, `comment`, `active`) VALUES (DEFAULT, 4, 'Random Event Comment', 1);
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `user_group`
+-- Data for table `user_usergroup`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `eventtracker`;
-INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (2, 1);
-INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (3, 1);
-INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (4, 1);
-INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (4, 2);
-INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (5, 2);
-INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (3, 2);
-INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (4, 3);
-INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (5, 3);
-INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (6, 3);
-INSERT INTO `user_group` (`user_id`, `usergroup_id`) VALUES (7, 4);
+INSERT INTO `user_usergroup` (`user_id`, `usergroup_id`) VALUES (2, 1);
+INSERT INTO `user_usergroup` (`user_id`, `usergroup_id`) VALUES (3, 1);
+INSERT INTO `user_usergroup` (`user_id`, `usergroup_id`) VALUES (4, 1);
+INSERT INTO `user_usergroup` (`user_id`, `usergroup_id`) VALUES (4, 2);
+INSERT INTO `user_usergroup` (`user_id`, `usergroup_id`) VALUES (5, 2);
+INSERT INTO `user_usergroup` (`user_id`, `usergroup_id`) VALUES (3, 2);
+INSERT INTO `user_usergroup` (`user_id`, `usergroup_id`) VALUES (4, 3);
+INSERT INTO `user_usergroup` (`user_id`, `usergroup_id`) VALUES (5, 3);
+INSERT INTO `user_usergroup` (`user_id`, `usergroup_id`) VALUES (6, 3);
+INSERT INTO `user_usergroup` (`user_id`, `usergroup_id`) VALUES (7, 4);
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `group_event`
+-- Data for table `usergroup_event`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `eventtracker`;
-INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (1, 1);
-INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (2, 1);
-INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (2, 2);
-INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (3, 2);
-INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (4, 2);
-INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (1, 3);
-INSERT INTO `group_event` (`usergroup_id`, `event_id`) VALUES (3, 3);
+INSERT INTO `usergroup_event` (`usergroup_id`, `event_id`) VALUES (1, 1);
+INSERT INTO `usergroup_event` (`usergroup_id`, `event_id`) VALUES (2, 1);
+INSERT INTO `usergroup_event` (`usergroup_id`, `event_id`) VALUES (2, 2);
+INSERT INTO `usergroup_event` (`usergroup_id`, `event_id`) VALUES (3, 2);
+INSERT INTO `usergroup_event` (`usergroup_id`, `event_id`) VALUES (4, 2);
+INSERT INTO `usergroup_event` (`usergroup_id`, `event_id`) VALUES (1, 3);
+INSERT INTO `usergroup_event` (`usergroup_id`, `event_id`) VALUES (3, 3);
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `group_comment`
+-- Data for table `usergroup_comment`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `eventtracker`;
-INSERT INTO `group_comment` (`usergroup_id`, `comment_id`) VALUES (1, 2);
+INSERT INTO `usergroup_comment` (`usergroup_id`, `comment_id`) VALUES (1, 2);
 
 COMMIT;
 
@@ -311,6 +312,7 @@ COMMIT;
 START TRANSACTION;
 USE `eventtracker`;
 INSERT INTO `event_comment` (`event_id`, `comment_id`) VALUES (1, 3);
+INSERT INTO `event_comment` (`event_id`, `comment_id`) VALUES (3, 7);
 
 COMMIT;
 

@@ -32,21 +32,18 @@ public class Usergroup {
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@ManyToMany
-	@JoinTable(name="user_group",
-		joinColumns=@JoinColumn(name="group_id"),
-		inverseJoinColumns=@JoinColumn(name="user_id"))
+	@ManyToMany(mappedBy="usergroups")
 	private List<User> users;
 	
 	@ManyToMany
-	@JoinTable(name="group_event",
-	joinColumns=@JoinColumn(name="group_id"),
+	@JoinTable(name="usergroup_event",
+	joinColumns=@JoinColumn(name="usergroup_id"),
 	inverseJoinColumns=@JoinColumn(name="event_id"))
 	private List<Event> events;
 	
 	@OneToMany
-	@JoinTable(name="group_comment",
-		joinColumns=@JoinColumn(name="group_id"),
+	@JoinTable(name="usergroup_comment",
+		joinColumns=@JoinColumn(name="usergroup_id"),
 		inverseJoinColumns=@JoinColumn(name="comment_id"))
 	private List<Comment> comments;
 
@@ -162,8 +159,7 @@ public class Usergroup {
 
 	@Override
 	public String toString() {
-		return "Group [id=" + id + ", name=" + name + ", description=" + description + ", active=" + active + ", user="
-				+ user + ", users=" + users + ", events=" + events + ", comments=" + comments + ", createdAt="
-				+ createdAt + ", updatedAt=" + updatedAt + "]";
+		return "Usergroup [id=" + id + ", name=" + name + ", description=" + description + ", active=" + active
+				+ ", user=" + user + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
 }

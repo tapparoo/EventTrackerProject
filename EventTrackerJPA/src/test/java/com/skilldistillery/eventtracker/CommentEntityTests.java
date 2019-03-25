@@ -56,6 +56,7 @@ class CommentEntityTests {
 	void test_Comment_entity_mappings() {
 		assertEquals("Good luck everyone!", comment.getComment());
 		assertTrue(comment.isActive());
+		assertEquals("Adam", comment.getUser().getFirstName());
 	}
 	
 	@Disabled
