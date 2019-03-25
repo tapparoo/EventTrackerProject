@@ -9,15 +9,6 @@ This is part one of the Event Tracker project.  This portion involves setting up
 - Spring Boot REST application with controller/repository/service - unit tested
 - Basic API routes tested via Postman
 
-## API Routes
-#### User
-- http://www.tappy.site:8080/EventTrackerREST/api/users
-#### Event
-- http://www.tappy.site:8080/EventTrackerREST/api/events
-#### Group
-- http://www.tappy.site:8080/EventTrackerREST/api/groups
-#### Comment
-- http://www.tappy.site:8080/EventTrackerREST/api/comments
 ### User REST API:
 | Return Type    | Route    | Functionality |
 | --------: | ------: |----------: |
