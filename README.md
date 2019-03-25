@@ -11,10 +11,10 @@ This is part one of the Event Tracker project.  This portion involves setting up
 
 ## API Routes
 #### User
-- http://www.tappy.site:8080/EventTracker/api/users
+- http://www.tappy.site:8080/EventTrackerREST/api/users
 #### Event
-- http://www.tappy.site:8080/EventTracker/api/events
+- http://www.tappy.site:8080/EventTrackerREST/api/events
 #### Group
-- http://www.tappy.site:8080/EventTracker/api/groups
+- http://www.tappy.site:8080/EventTrackerREST/api/groups
 #### Comment
-- http://www.tappy.site:8080/EventTracker/api/comments
+- http://www.tappy.site:8080/EventTrackerREST/api/comments
