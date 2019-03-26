@@ -3,6 +3,7 @@ package com.skilldistillery.eventtracker.services;
 import java.util.List;
 
 import com.skilldistillery.eventtracker.User;
+import com.skilldistillery.eventtracker.Usergroup;
 
 public interface UserService {
 
@@ -11,5 +12,6 @@ public interface UserService {
 	User addUser(User user);
 	User modifyUser(User user);
 	boolean deleteUser(User user);
+	List<Usergroup> findGroupsByUserId(int id);
 
 }

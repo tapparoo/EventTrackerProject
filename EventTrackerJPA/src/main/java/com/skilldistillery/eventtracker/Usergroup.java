@@ -1,5 +1,6 @@
 package com.skilldistillery.eventtracker;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +57,32 @@ public class Usergroup {
 	@UpdateTimestamp
 	private Date updatedAt;
 
+	public void addComment(Comment comment) {
+		if (comments == null) comments = new ArrayList<>();
+		if (!comments.contains(comment)) {
+			comments.add(comment);
+		}
+	}
+	
+	public void removeComment(Comment comment) {
+		if (comments != null && comments.contains(comment)) {
+			comments.remove(comment);
+		}
+	}
+	
+	public void addEvent(Event event) {
+		if (events == null) events = new ArrayList<>();
+		if (!events.contains(event)) {
+			events.add(event);
+		}
+	}
+
+	public void removeEvent(Event event) {
+		if (events != null && events.contains(event)) {
+			events.remove(event);
+		}
+	}
+	
 	public int getId() {
 		return id;
 	}

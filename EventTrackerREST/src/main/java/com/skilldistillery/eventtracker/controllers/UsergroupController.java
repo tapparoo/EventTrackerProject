@@ -14,7 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skilldistillery.eventtracker.Comment;
+import com.skilldistillery.eventtracker.Event;
 import com.skilldistillery.eventtracker.Usergroup;
+import com.skilldistillery.eventtracker.services.CommentService;
+import com.skilldistillery.eventtracker.services.EventService;
+import com.skilldistillery.eventtracker.services.UserService;
 import com.skilldistillery.eventtracker.services.UsergroupService;
 
 @RestController
@@ -22,6 +27,12 @@ import com.skilldistillery.eventtracker.services.UsergroupService;
 public class UsergroupController {
 	@Autowired
 	private UsergroupService serv;
+	@Autowired
+	private EventService eventServ;
+	@Autowired
+	private UserService userServ;
+	@Autowired
+	private CommentService commentServ;
 	
 	@GetMapping("{id}")
 	public Usergroup getUsergroup(@PathVariable("id") Integer gid, HttpServletResponse resp) {
@@ -45,6 +56,28 @@ public class UsergroupController {
 		return users;
 	}
 	
+	@GetMapping("{id}/comments")
+	public List<Comment> getGroupComments(@PathVariable("id") Integer id, HttpServletResponse resp){
+		List<Comment> comments = serv.findCommentsByGroupId(id);
+		if(comments.size() > 0) {
+			resp.setStatus(200);
+		}else {
+			resp.setStatus(404);
+		}
+		return comments;
+	}
+	
+	@GetMapping("{id}/events")
+	public List<Event> getGroupEvents(@PathVariable("id") Integer id, HttpServletResponse resp){
+		List<Event> groups = serv.findEventsByGroupId(id);
+		if(groups.size() > 0) {
+			resp.setStatus(200);
+		}else {
+			resp.setStatus(404);
+		}
+		return groups;
+	}
+	
 	@PutMapping("{id}")
 	public Usergroup modifiyUsergroup(@PathVariable("id") Integer id, @RequestBody Usergroup modifiedUsergroup, HttpServletResponse resp) {
 		modifiedUsergroup.setId(id);
@@ -55,6 +88,20 @@ public class UsergroupController {
 			resp.setStatus(404);
 		}
 		return updatedUsergroup;
+	}
+	
+	@PutMapping("{id}/events/{eid}")
+	public Usergroup addGroupToEvent(@PathVariable("id") Integer id, @PathVariable("eid") Integer eid, HttpServletResponse resp) {
+		Usergroup group = serv.findUsergroupById(id);
+		Event evt = eventServ.findEventById(eid);
+		if(group != null && evt != null) {
+			group.addEvent(evt);
+			serv.modifyUsergroup(group);
+			resp.setStatus(200);
+		}else {
+			resp.setStatus(404);
+		}
+		return group;
 	}
 
 	@PostMapping
@@ -68,6 +115,23 @@ public class UsergroupController {
 		return user;
 	}
 	
+	@PostMapping("{id}/comments")
+	public Comment addGroupComment(@PathVariable("id") Integer eid, @RequestBody Comment comment, HttpServletResponse resp) {
+		// TODO: use session to assign userid
+		int userId = 1;
+		Usergroup group = serv.findUsergroupById(eid);
+		if(group != null) {
+			comment = commentServ.addComment(comment);
+			comment.setUser(userServ.findUserById(userId));
+			group.addComment(comment);
+			serv.modifyUsergroup(group);
+			resp.setStatus(200);
+		}else {
+			resp.setStatus(404);
+		}
+		return comment;
+	}
+	
 	@DeleteMapping("{id}")
 	public boolean deleteUsergroup(@PathVariable("id") Integer id, HttpServletResponse resp) {
 		boolean deleted = serv.deleteUsergroup(serv.findUsergroupById(id));
@@ -77,5 +141,38 @@ public class UsergroupController {
 			resp.setStatus(204);
 		}
 		return deleted;
+	}
+	
+	@DeleteMapping("{id}/comments/{cid}")
+	public boolean deleteGroupComment(@PathVariable("id") Integer gid, @PathVariable("cid") Integer cid, HttpServletResponse resp) {
+		Comment c = commentServ.findCommentById(cid);
+		Usergroup group = serv.findUsergroupById(gid);
+		boolean deleted = false;
+		if (c != null) {
+			commentServ.deleteComment(c);
+			group.removeComment(c);
+			serv.modifyUsergroup(group);
+			resp.setStatus(204);
+			deleted = true;
+		}else {
+			resp.setStatus(404);
+		}
+		return deleted;
+	}
+	
+	@DeleteMapping("{id}/events/{eid}")
+	public boolean removeGroupFromEvent(@PathVariable("id") Integer gid, @PathVariable("eid") Integer eid, HttpServletResponse resp) {
+		Event evt = eventServ.findEventById(eid);
+		Usergroup group = serv.findUsergroupById(gid);
+		boolean removed = false;
+		if (evt != null && group != null) {
+			group.removeEvent(evt);
+			serv.modifyUsergroup(group);
+			resp.setStatus(204);
+			removed = true;
+		}else {
+			resp.setStatus(404);
+		}
+		return removed;
 	}
 }

@@ -121,13 +121,13 @@ CREATE TABLE IF NOT EXISTS `user_usergroup` (
   CONSTRAINT `fk_user_group_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_user_usergroup_group`
     FOREIGN KEY (`usergroup_id`)
     REFERENCES `usergroup` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -144,13 +144,13 @@ CREATE TABLE IF NOT EXISTS `usergroup_event` (
   CONSTRAINT `fk_usergroup_event_usergroup`
     FOREIGN KEY (`usergroup_id`)
     REFERENCES `usergroup` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_usergroup_event_event`
     FOREIGN KEY (`event_id`)
     REFERENCES `event` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -167,13 +167,13 @@ CREATE TABLE IF NOT EXISTS `usergroup_comment` (
   CONSTRAINT `fk_usergroup_comment_usergroup`
     FOREIGN KEY (`usergroup_id`)
     REFERENCES `usergroup` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_usergroup_comment_comment`
     FOREIGN KEY (`comment_id`)
     REFERENCES `comment` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -190,13 +190,13 @@ CREATE TABLE IF NOT EXISTS `event_comment` (
   CONSTRAINT `fk_event_comment_event`
     FOREIGN KEY (`event_id`)
     REFERENCES `event` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_event_comment_comment`
     FOREIGN KEY (`comment_id`)
     REFERENCES `comment` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 SET SQL_MODE = '';

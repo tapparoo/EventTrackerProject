@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.eventtracker.Comment;
+import com.skilldistillery.eventtracker.Event;
 import com.skilldistillery.eventtracker.Usergroup;
 import com.skilldistillery.eventtracker.repositories.UsergroupRepository;
 
@@ -44,5 +46,15 @@ public class UsergroupServiceImpl implements UsergroupService {
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public List<Comment> findCommentsByGroupId(int id){
+		return repo.findCommentByGroupId(id);
+	}
+	
+	@Override
+	public List<Event> findEventsByGroupId(int id){
+		return repo.findEventByGroupId(id);
 	}
 }

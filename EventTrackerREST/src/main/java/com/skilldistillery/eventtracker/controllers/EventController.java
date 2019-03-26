@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.eventtracker.Comment;
 import com.skilldistillery.eventtracker.Event;
+import com.skilldistillery.eventtracker.Usergroup;
 import com.skilldistillery.eventtracker.services.CommentService;
 import com.skilldistillery.eventtracker.services.EventService;
 import com.skilldistillery.eventtracker.services.UserService;
@@ -66,6 +67,17 @@ public class EventController {
 		return comments;
 	}
 	
+	@GetMapping("{id}/groups")
+	public List<Usergroup> getEventGroups(@PathVariable("id") Integer id, HttpServletResponse resp){
+		List<Usergroup> groups = serv.findUsergroupsByEventId(id);
+		if(groups.size() > 0) {
+			resp.setStatus(200);
+		}else {
+			resp.setStatus(404);
+		}
+		return groups;
+	}
+	
 	@PutMapping("{id}")
 	public Event modifiyEvent(@PathVariable("id") Integer id, @RequestBody Event modifiedEvent, HttpServletResponse resp) {
 		modifiedEvent.setId(id);
@@ -98,6 +110,7 @@ public class EventController {
 			comment = commentServ.addComment(comment);
 			comment.setUser(userServ.findUserById(userId));
 			event.addComment(comment);
+			serv.modifyEvent(event);
 			resp.setStatus(200);
 		}else {
 			resp.setStatus(404);
@@ -112,6 +125,24 @@ public class EventController {
 			resp.setStatus(404);
 		}else {
 			resp.setStatus(204);
+		}
+		return deleted;
+	}
+	
+	
+	@DeleteMapping("{id}/comments/{cid}")
+	public boolean deleteEventComment(@PathVariable("id") Integer eid, @PathVariable("cid") Integer cid, HttpServletResponse resp) {
+		Comment c = commentServ.findCommentById(cid);
+		Event event = serv.findEventById(eid);
+		boolean deleted = false;
+		if (c != null) {
+			commentServ.deleteComment(c);
+			event.removeComment(c);
+			serv.modifyEvent(event);
+			resp.setStatus(204);
+			deleted = true;
+		}else {
+			resp.setStatus(404);
 		}
 		return deleted;
 	}

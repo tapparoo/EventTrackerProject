@@ -15,13 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.eventtracker.User;
+import com.skilldistillery.eventtracker.Usergroup;
 import com.skilldistillery.eventtracker.services.UserService;
+import com.skilldistillery.eventtracker.services.UsergroupService;
 
 @RestController
 @RequestMapping("api/users")
 public class UserController {
 	@Autowired
 	private UserService serv;
+	@Autowired
+	private UsergroupService groupServ;
 	
 	@GetMapping("{id}")
 	public User getUser(@PathVariable("id") Integer uid, HttpServletResponse resp) {
@@ -45,6 +49,17 @@ public class UserController {
 		return users;
 	}
 	
+	@GetMapping("{id}/groups")
+	public List<Usergroup> getGroupsByUser(@PathVariable("id") Integer uid, HttpServletResponse resp){
+		List<Usergroup> groups = serv.findGroupsByUserId(uid);
+		if(groups.size() > 0) {
+			resp.setStatus(200);
+		}else {
+			resp.setStatus(404);
+		}
+		return groups;
+	}
+	
 	@PutMapping("{id}")
 	public User modifiyUser(@PathVariable("id") Integer id, @RequestBody User modifiedUser, HttpServletResponse resp) {
 		modifiedUser.setId(id);
@@ -55,6 +70,20 @@ public class UserController {
 			resp.setStatus(404);
 		}
 		return updatedUser;
+	}
+	
+	@PutMapping("{id}/groups/{gid}")
+	public User addUserToGroup(@PathVariable("id") Integer id, @PathVariable("gid") Integer gid, HttpServletResponse resp) {
+		User user = serv.findUserById(id);
+		Usergroup group = groupServ.findUsergroupById(gid);
+		if(user != null && group != null) {
+			user.addUsergroup(group);
+			serv.modifyUser(user);
+			resp.setStatus(200);
+		}else {
+			resp.setStatus(404);
+		}
+		return user;
 	}
 
 	@PostMapping
@@ -78,5 +107,20 @@ public class UserController {
 		}
 		return deleted;
 	}
+	
+	@DeleteMapping("{id}/groups/{gid}")
+	public User removeUserFromGroup(@PathVariable("id") Integer id, @PathVariable("gid") Integer gid, HttpServletResponse resp) {
+		User user = serv.findUserById(id);
+		Usergroup group = groupServ.findUsergroupById(gid);
+		if(user != null && group != null) {
+			user.removeUsergroup(group);
+			serv.modifyUser(user);
+			resp.setStatus(200);
+		}else {
+			resp.setStatus(404);
+		}
+		return user;
+	}
+
 	
 }

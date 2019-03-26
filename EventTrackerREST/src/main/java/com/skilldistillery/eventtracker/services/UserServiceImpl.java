@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.eventtracker.User;
+import com.skilldistillery.eventtracker.Usergroup;
 import com.skilldistillery.eventtracker.repositories.UserRepository;
 
 @Service
@@ -19,6 +20,11 @@ public class UserServiceImpl implements UserService {
 		Optional<User> user = repo.findById(id);
 		
 		return user.isPresent() ? user.get() : null;
+	}
+	
+	@Override
+	public List<Usergroup> findGroupsByUserId(int id){
+		return repo.findUsergroupByUserId(id);
 	}
 	
 	@Override

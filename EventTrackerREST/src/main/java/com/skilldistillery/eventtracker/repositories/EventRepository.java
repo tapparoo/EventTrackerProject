@@ -15,5 +15,5 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 	@Query("SELECT e.comments FROM Event e WHERE e.id = :eid")
 	List<Comment> findCommentByEventId(@Param("eid") int id);
 	@Query("SELECT e.usergroups FROM Event e WHERE e.id = :eid")
-	List<Usergroup> findUsergroupsByEventId(@Param("eid") int id);
+	List<Usergroup> findUsergroupByEventId(@Param("eid") int id);
 }

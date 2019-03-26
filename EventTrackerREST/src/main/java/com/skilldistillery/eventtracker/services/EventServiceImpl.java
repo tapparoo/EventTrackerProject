@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.eventtracker.Comment;
 import com.skilldistillery.eventtracker.Event;
+import com.skilldistillery.eventtracker.Usergroup;
 import com.skilldistillery.eventtracker.repositories.EventRepository;
 
 @Service
@@ -49,5 +50,10 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public List<Comment> findCommentsByEventId(int id){
 		return repo.findCommentByEventId(id);
+	}
+	
+	@Override
+	public List<Usergroup> findUsergroupsByEventId(int id){
+		return repo.findUsergroupByEventId(id);
 	}
 }

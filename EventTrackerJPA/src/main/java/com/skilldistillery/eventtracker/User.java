@@ -1,5 +1,6 @@
 package com.skilldistillery.eventtracker;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +58,19 @@ public class User {
 		inverseJoinColumns=@JoinColumn(name="usergroup_id"))
 	private List<Usergroup> usergroups;
 
+	public void addUsergroup(Usergroup group) {
+		if (usergroups == null) usergroups = new ArrayList<>();
+		if (!usergroups.contains(group)) {
+			usergroups.add(group);
+		}
+	}
+	
+	public void removeUsergroup(Usergroup group) {
+		if (usergroups != null && usergroups.contains(group)) {
+			usergroups.remove(group);
+		}
+	}
+	
 	public int getId() {
 		return id;
 	}
