@@ -12,5 +12,6 @@ import com.skilldistillery.eventtracker.Usergroup;
 public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("SELECT u.usergroups FROM User u WHERE u.id = :id")
 	List<Usergroup> findUsergroupByUserId(@Param(value="id") int id);
+	User findByEmail(String email);
 
 }

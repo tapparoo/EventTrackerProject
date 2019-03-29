@@ -76,7 +76,11 @@ public class UserController {
 	public User addUserToGroup(@PathVariable("id") Integer id, @PathVariable("gid") Integer gid, HttpServletResponse resp) {
 		User user = serv.findUserById(id);
 		Usergroup group = groupServ.findUsergroupById(gid);
-		if(user != null && group != null) {
+		List<Usergroup> groups = serv.findGroupsByUserId(id);
+		if(groups.contains(group)){
+			resp.setStatus(400);
+		}
+		else if(user != null && group != null) {
 			user.addUsergroup(group);
 			serv.modifyUser(user);
 			resp.setStatus(200);
@@ -112,7 +116,12 @@ public class UserController {
 	public User removeUserFromGroup(@PathVariable("id") Integer id, @PathVariable("gid") Integer gid, HttpServletResponse resp) {
 		User user = serv.findUserById(id);
 		Usergroup group = groupServ.findUsergroupById(gid);
-		if(user != null && group != null) {
+		List<Usergroup> groups = serv.findGroupsByUserId(id);
+		
+		if(!groups.contains(group)){
+			resp.setStatus(400);
+		}
+		else if(user != null && group != null) {
 			user.removeUsergroup(group);
 			serv.modifyUser(user);
 			resp.setStatus(200);

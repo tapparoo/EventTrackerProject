@@ -23,6 +23,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public User findUserByEmail(String email) {
+		return repo.findByEmail(email);
+	}
+	
+	@Override
 	public List<Usergroup> findGroupsByUserId(int id){
 		return repo.findUsergroupByUserId(id);
 	}

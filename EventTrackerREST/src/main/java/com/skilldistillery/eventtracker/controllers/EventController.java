@@ -20,7 +20,6 @@ import com.skilldistillery.eventtracker.Usergroup;
 import com.skilldistillery.eventtracker.services.CommentService;
 import com.skilldistillery.eventtracker.services.EventService;
 import com.skilldistillery.eventtracker.services.UserService;
-import com.skilldistillery.eventtracker.services.UsergroupService;
 
 @RestController
 @RequestMapping("api/events")
@@ -29,8 +28,6 @@ public class EventController {
 	private EventService serv;
 	@Autowired
 	private CommentService commentServ;
-	@Autowired
-	private UsergroupService groupServ;
 	@Autowired
 	private UserService userServ;
 	

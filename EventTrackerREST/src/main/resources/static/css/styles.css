@@ -1,0 +1,13 @@
+.content{
+	border: thin solid black;
+	height: -webkit-fill-available;
+    max-height: 400px;
+}
+
+.row-content {
+	margin-top: 50px;
+}
+
+.row-content > .col > .dropdown {
+	margin-bottom: 30px;
+}

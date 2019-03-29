@@ -13,5 +13,6 @@ public interface UserService {
 	User modifyUser(User user);
 	boolean deleteUser(User user);
 	List<Usergroup> findGroupsByUserId(int id);
+	User findUserByEmail(String email);
 
 }
