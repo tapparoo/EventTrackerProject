@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.eventtracker.Comment;
 import com.skilldistillery.eventtracker.Event;
+import com.skilldistillery.eventtracker.User;
 import com.skilldistillery.eventtracker.Usergroup;
 import com.skilldistillery.eventtracker.repositories.UsergroupRepository;
 
@@ -56,5 +57,10 @@ public class UsergroupServiceImpl implements UsergroupService {
 	@Override
 	public List<Event> findEventsByGroupId(int id){
 		return repo.findEventByGroupId(id);
+	}
+	
+	@Override
+	public List<User> findUsersByGroupId(int id){
+		return repo.findUsersByGroupId(id);
 	}
 }

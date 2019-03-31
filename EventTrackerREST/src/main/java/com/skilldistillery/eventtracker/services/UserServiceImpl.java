@@ -1,5 +1,6 @@
 package com.skilldistillery.eventtracker.services;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,17 +39,17 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User addUser(User user) {
+	public User addUser(User user) throws SQLIntegrityConstraintViolationException{
 		return repo.saveAndFlush(user);
 	}
 	
 	@Override
-	public User modifyUser(User user) {
+	public User modifyUser(User user) throws SQLIntegrityConstraintViolationException{
 		return repo.saveAndFlush(user);
 	}
 	
 	@Override
-	public boolean deleteUser(User user) {
+	public boolean deleteUser(User user) throws SQLIntegrityConstraintViolationException {
 		Optional<User> userOpt = repo.findById(user.getId());
 		if(userOpt.isPresent()) {
 			repo.delete(userOpt.get());

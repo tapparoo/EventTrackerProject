@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.eventtracker.Comment;
 import com.skilldistillery.eventtracker.Event;
+import com.skilldistillery.eventtracker.User;
 import com.skilldistillery.eventtracker.Usergroup;
 import com.skilldistillery.eventtracker.services.CommentService;
 import com.skilldistillery.eventtracker.services.EventService;
@@ -48,6 +49,17 @@ public class UsergroupController {
 	@GetMapping
 	public List<Usergroup> getAllUsergroups(HttpServletResponse resp) {
 		List<Usergroup> users = serv.findAllUsergroups();
+		if(users.size() > 0) {
+			resp.setStatus(200);
+		}else {
+			resp.setStatus(404);
+		}
+		return users;
+	}
+	
+	@GetMapping("{id}/users")
+	public List<User> getGroupUsers(@PathVariable("id") Integer id, HttpServletResponse resp){
+		List<User> users = serv.findUsersByGroupId(id);
 		if(users.size() > 0) {
 			resp.setStatus(200);
 		}else {

@@ -1,10 +1,8 @@
 package com.skilldistillery.eventtracker;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,11 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,11 +23,6 @@ public class Usergroup {
 	private String name;
 	private String description;
 	private boolean active;
-
-	// creator/admin of this group
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
 
 	@JsonIgnore
 	@ManyToMany(mappedBy = "usergroups")
@@ -48,14 +37,6 @@ public class Usergroup {
 	@OneToMany
 	@JoinTable(name = "usergroup_comment", joinColumns = @JoinColumn(name = "usergroup_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
 	private List<Comment> comments;
-
-	@Column(name = "created_at")
-	@CreationTimestamp
-	private Date createdAt;
-
-	@Column(name = "updated_at")
-	@UpdateTimestamp
-	private Date updatedAt;
 
 	public void addComment(Comment comment) {
 		if (comments == null) comments = new ArrayList<>();
@@ -115,14 +96,6 @@ public class Usergroup {
 		this.active = active;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public List<User> getUsers() {
 		return users;
 	}
@@ -145,22 +118,6 @@ public class Usergroup {
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
 	}
 
 	@Override
@@ -188,6 +145,6 @@ public class Usergroup {
 	@Override
 	public String toString() {
 		return "Usergroup [id=" + id + ", name=" + name + ", description=" + description + ", active=" + active
-				+ ", user=" + user + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+				+ ", users=" + users + ", events=" + events + ", comments=" + comments + "]";
 	}
 }

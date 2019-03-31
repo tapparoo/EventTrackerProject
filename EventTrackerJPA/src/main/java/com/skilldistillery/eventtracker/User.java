@@ -1,7 +1,6 @@
 package com.skilldistillery.eventtracker;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,9 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -39,18 +35,6 @@ public class User {
 	private boolean active;
 	private boolean admin;
 
-	@Column(name = "created_at")
-	@CreationTimestamp
-	private Date createdAt;
-
-	@Column(name = "updated_at")
-	@UpdateTimestamp
-	private Date updatedAt;
-	
-	@Column(name = "last_login")
-	@UpdateTimestamp
-	private Date lastLogin;
-	
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="user_usergroup",
@@ -151,30 +135,6 @@ public class User {
 		this.admin = admin;
 	}
 
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	public Date getLastLogin() {
-		return lastLogin;
-	}
-
-	public void setLastLogin(Date lastLogin) {
-		this.lastLogin = lastLogin;
-	}
-
 	public List<Usergroup> getUsergroups() {
 		return usergroups;
 	}
@@ -217,7 +177,7 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
 				+ ", password=" + password + ", email=" + email + ", age=" + age + ", heightInInches=" + heightInInches
-				+ ", weightInPounds=" + weightInPounds + ", active=" + active + ", admin=" + admin + ", createdAt="
-				+ createdAt + ", updatedAt=" + updatedAt + ", lastLogin=" + lastLogin + "]";
+				+ ", weightInPounds=" + weightInPounds + ", active=" + active + ", admin=" + admin + ", usergroups="
+				+ usergroups + "]";
 	}
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,11 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,11 +25,7 @@ public class Event {
 	private String name;
 	private String description;
 	private boolean active;
-	
-	// creator/admin of this event
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	private User user;
+
 	private Date date;
 	
 	@JsonIgnore
@@ -47,14 +38,6 @@ public class Event {
 	@JsonIgnore
 	@ManyToMany(mappedBy="events")
 		private List<Usergroup> usergroups;
-	
-	@Column(name = "created_at")
-	@CreationTimestamp
-	private Date createdAt;
-
-	@Column(name = "updated_at")
-	@UpdateTimestamp
-	private Date updatedAt;
 
 	public void addComment(Comment comment) {
 		if (comments == null) comments = new ArrayList<>();
@@ -114,14 +97,6 @@ public class Event {
 		this.active = active;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public Date getDate() {
 		return date;
 	}
@@ -144,22 +119,6 @@ public class Event {
 
 	public void setUsergroups(List<Usergroup> usergroups) {
 		this.usergroups = usergroups;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
 	}
 
 	@Override
@@ -186,7 +145,7 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", active=" + active + ", user="
-				+ user + ", date=" + date + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+		return "Event [id=" + id + ", name=" + name + ", description=" + description + ", active=" + active + ", date="
+				+ date + ", comments=" + comments + ", usergroups=" + usergroups + "]";
 	}
 }

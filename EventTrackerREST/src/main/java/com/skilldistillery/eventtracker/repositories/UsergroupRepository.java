@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.skilldistillery.eventtracker.Comment;
 import com.skilldistillery.eventtracker.Event;
+import com.skilldistillery.eventtracker.User;
 import com.skilldistillery.eventtracker.Usergroup;
 
 public interface UsergroupRepository extends JpaRepository<Usergroup, Integer> {
@@ -15,4 +16,6 @@ public interface UsergroupRepository extends JpaRepository<Usergroup, Integer> {
 	List<Event> findEventByGroupId(@Param("gid") int id);
 	@Query("SELECT g.comments FROM Usergroup g WHERE g.id = :gid")
 	List<Comment> findCommentByGroupId(@Param("gid") int id);
+	@Query("SELECT g.users FROM Usergroup g WHERE g.id = :gid")
+	List<User> findUsersByGroupId(@Param("gid") int id);
 }

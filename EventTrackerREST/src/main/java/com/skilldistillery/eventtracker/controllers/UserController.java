@@ -1,5 +1,6 @@
 package com.skilldistillery.eventtracker.controllers;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,65 +27,76 @@ public class UserController {
 	private UserService serv;
 	@Autowired
 	private UsergroupService groupServ;
-	
+
 	@GetMapping("{id}")
 	public User getUser(@PathVariable("id") Integer uid, HttpServletResponse resp) {
 		User user = serv.findUserById(uid);
-		if(user != null) {
+		if (user != null) {
 			resp.setStatus(200);
-		}else {
+		} else {
 			resp.setStatus(404);
 		}
 		return user;
 	}
-	
+
 	@GetMapping
 	public List<User> getAllUsers(HttpServletResponse resp) {
 		List<User> users = serv.findAllUsers();
-		if(users.size() > 0) {
+		if (users.size() > 0) {
 			resp.setStatus(200);
-		}else {
+		} else {
 			resp.setStatus(404);
 		}
 		return users;
 	}
-	
+
 	@GetMapping("{id}/groups")
-	public List<Usergroup> getGroupsByUser(@PathVariable("id") Integer uid, HttpServletResponse resp){
+	public List<Usergroup> getGroupsByUser(@PathVariable("id") Integer uid, HttpServletResponse resp) {
 		List<Usergroup> groups = serv.findGroupsByUserId(uid);
-		if(groups.size() > 0) {
+		if (groups.size() > 0) {
 			resp.setStatus(200);
-		}else {
+		} else {
 			resp.setStatus(404);
 		}
 		return groups;
 	}
-	
+
 	@PutMapping("{id}")
 	public User modifiyUser(@PathVariable("id") Integer id, @RequestBody User modifiedUser, HttpServletResponse resp) {
 		modifiedUser.setId(id);
-		User updatedUser = serv.modifyUser(modifiedUser);
-		if(updatedUser != null) {
+		User updatedUser = null;
+
+		try {
+			updatedUser = serv.modifyUser(modifiedUser);
+		} catch (Exception e) {
+			if (modifiedUser.getHeightInInches() > 999.9 || modifiedUser.getWeightInPounds() > 999.9) {
+				resp.setHeader("Error", "Height or weight is out of range - max value = 999.9");
+			} else {
+				resp.setHeader("Error", "Username or email already exists");
+			}
+		}
+
+		if (updatedUser != null) {
 			resp.setStatus(200);
-		}else {
+		} else {
 			resp.setStatus(404);
 		}
 		return updatedUser;
 	}
-	
+
 	@PutMapping("{id}/groups/{gid}")
-	public User addUserToGroup(@PathVariable("id") Integer id, @PathVariable("gid") Integer gid, HttpServletResponse resp) {
+	public User addUserToGroup(@PathVariable("id") Integer id, @PathVariable("gid") Integer gid,
+			HttpServletResponse resp) throws SQLIntegrityConstraintViolationException {
 		User user = serv.findUserById(id);
 		Usergroup group = groupServ.findUsergroupById(gid);
 		List<Usergroup> groups = serv.findGroupsByUserId(id);
-		if(groups.contains(group)){
+		if (groups.contains(group)) {
 			resp.setStatus(400);
-		}
-		else if(user != null && group != null) {
+		} else if (user != null && group != null) {
 			user.addUsergroup(group);
 			serv.modifyUser(user);
 			resp.setStatus(200);
-		}else {
+		} else {
 			resp.setStatus(404);
 		}
 		return user;
@@ -92,44 +104,59 @@ public class UserController {
 
 	@PostMapping
 	public User addUser(@RequestBody User newUser, HttpServletResponse resp) {
-		User user = serv.addUser(newUser);
-		if(user != null) {
+		User user = null;
+
+		try {
+			user = serv.addUser(newUser);
+		} catch (Exception e) {
+			if (newUser.getHeightInInches() > 999.9 || newUser.getWeightInPounds() > 999.9) {
+				resp.setHeader("Error", "Height or weight is out of range - max value = 999.9");
+			} else {
+				resp.setHeader("Error", "Username or email already exists");
+			}
+		}
+
+		if (user != null) {
 			resp.setStatus(200);
-		}else {
+		} else {
 			resp.setStatus(400);
 		}
 		return user;
 	}
-	
+
 	@DeleteMapping("{id}")
 	public boolean deleteUser(@PathVariable("id") Integer id, HttpServletResponse resp) {
-		boolean deleted = serv.deleteUser(serv.findUserById(id));
+		boolean deleted = false;
+		try {
+			deleted = serv.deleteUser(serv.findUserById(id));
+		} catch (Exception e) {
+			resp.setHeader("error", "You must reassign the admins of this user's groups/events before deleting");
+		}
 		if (!deleted) {
 			resp.setStatus(404);
-		}else {
+		} else {
 			resp.setStatus(204);
 		}
 		return deleted;
 	}
-	
+
 	@DeleteMapping("{id}/groups/{gid}")
-	public User removeUserFromGroup(@PathVariable("id") Integer id, @PathVariable("gid") Integer gid, HttpServletResponse resp) {
+	public User removeUserFromGroup(@PathVariable("id") Integer id, @PathVariable("gid") Integer gid,
+			HttpServletResponse resp) throws SQLIntegrityConstraintViolationException {
 		User user = serv.findUserById(id);
 		Usergroup group = groupServ.findUsergroupById(gid);
 		List<Usergroup> groups = serv.findGroupsByUserId(id);
-		
-		if(!groups.contains(group)){
+
+		if (!groups.contains(group)) {
 			resp.setStatus(400);
-		}
-		else if(user != null && group != null) {
+		} else if (user != null && group != null) {
 			user.removeUsergroup(group);
 			serv.modifyUser(user);
 			resp.setStatus(200);
-		}else {
+		} else {
 			resp.setStatus(404);
 		}
 		return user;
 	}
 
-	
 }

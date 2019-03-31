@@ -1,7 +1,6 @@
-.content{
-	border: thin solid black;
-	height: -webkit-fill-available;
-    max-height: 400px;
+.tab-pane > .container{
+	border: thin solid #62686b;
+	padding:20px;
 }
 
 .row-content {
@@ -10,4 +9,16 @@
 
 .row-content > .col > .dropdown {
 	margin-bottom: 30px;
+}
+
+.date-info {
+    font-size: .5em;
+    color: grey;
+}
+
+.flexme {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }

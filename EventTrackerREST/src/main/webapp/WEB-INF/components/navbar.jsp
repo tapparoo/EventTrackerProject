@@ -1,16 +1,15 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <style>
 	.navbar{
-		background-color: #739eb7!important;
+		background-color: #62686b!important;
 	}
 	.navbar-brand, #navSearchButton{
 		color: white!important;
 	    font-weight: bold;
 	}
 	#navbarSupportedContent,.btn-outline-warning{
-	    background-color: #779db8;
+	    background-color: #62686b;
 		border-color: #caced3!important;
 		color: white!important;
 		margin:5px;
