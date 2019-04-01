@@ -187,7 +187,7 @@ let deleteGroup = function(id) {
 		if (xhr.readyState === 4) {
 			if (xhr.status == 204) {
 				getAllGroups();
-				populateEventData();
+				populateGroupData();
 			} else {
 				console.log("DELETE request failed.");
 				console.error(xhr.status + ': ' + xhr.responseText);
@@ -467,6 +467,7 @@ let populateUserData = function(user) {
 		userForm.uid.value = '';
 		userForm.admin.checked = '';
 		userForm.active.checked = '';
+		userForm.bmi.value = '';
 	}
 	$('#nav-user-tab').click();
 }
