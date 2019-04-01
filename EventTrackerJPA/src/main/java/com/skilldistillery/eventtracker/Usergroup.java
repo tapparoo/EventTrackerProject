@@ -145,6 +145,6 @@ public class Usergroup {
 	@Override
 	public String toString() {
 		return "Usergroup [id=" + id + ", name=" + name + ", description=" + description + ", active=" + active
-				+ ", users=" + users + ", events=" + events + ", comments=" + comments + "]";
+				+ ", comments=" + comments + "]";
 	}
 }

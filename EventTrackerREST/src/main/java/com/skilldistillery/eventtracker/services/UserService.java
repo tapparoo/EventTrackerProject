@@ -12,7 +12,7 @@ public interface UserService {
 	List<User> findAllUsers();
 	User addUser(User user) throws SQLIntegrityConstraintViolationException;
 	User modifyUser(User user) throws SQLIntegrityConstraintViolationException;
-	boolean deleteUser(User user) throws SQLIntegrityConstraintViolationException;
+	boolean deleteUser(User user);
 	List<Usergroup> findGroupsByUserId(int id);
 	User findUserByEmail(String email);
 

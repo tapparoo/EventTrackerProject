@@ -45,7 +45,7 @@ let loadGroupDropdown = function(groups) {
 }
 
 let loadGroupUsersDropdown = function(users) {
-	let dropdown = document.getElementById('usergroupListInnerDiv');
+	let dropdown = document.getElementById('groupuserListInnerDiv');
 	let btns = dropdown.getElementsByClassName('dropdown-item');
 	
 	if (btns.length > 1) {
@@ -342,6 +342,28 @@ let getUserById = function(id){
 	xhr.send(null);
 }
 
+let getGroupsByUser = function(user) {
+	let xhr = new XMLHttpRequest();
+	let path = `api/users/${user.id}/groups`
+	xhr.open('GET', path, true);
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4 && xhr.status < 400) {
+			let data = xhr.responseText;
+			if(data !== ''){
+				data = JSON.parse(xhr.responseText);
+			}
+			loadUserGroupsDropdown(user, data);
+		}
+
+		if (xhr.readyState === 4 && xhr.status >= 400) {
+			console.error(xhr.status + ': ' + xhr.responseText);
+		}
+	};
+
+	xhr.send(null);
+}
+
 let loadUserDropdown = function(users) {
 	let dropdown = document.getElementById('userListInnerDiv');
 	let btns = dropdown.getElementsByClassName('dropdown-item');
@@ -380,6 +402,7 @@ let populateUserData = function(user) {
 		userForm.uid.value = user.id;
 		userForm.admin.checked = user.admin;
 		userForm.active.checked = user.active;
+		getGroupsByUser(user)
 	} else {
 		userForm.firstName.value = '';
 		userForm.lastName.value = '';
@@ -394,6 +417,32 @@ let populateUserData = function(user) {
 		userForm.active.checked = '';
 	}
 	$('#nav-user-tab').click();
+}
+
+let loadUserGroupsDropdown = function(user, groups) {
+	let dropdown = document.getElementById('usergroupListInnerDiv');
+	let btns = dropdown.getElementsByClassName('dropdown-item');
+
+	if (btns.length >= 1) {
+		for (let i = btns.length - 1; i >= 0; i--) {
+			dropdown.removeChild(btns[i]);
+		}
+	}
+	
+	for (let i = 0; i < groups.length; i++) {
+		let group = groups[i];
+		let btn = document.createElement('button');
+		btn.classList.add('dropdown-item');
+		btn.setAttribute('type', 'button');
+		btn.innerHTML = "<button class='redx' data-toggle='tooltip' " +
+				"data-placement='left' title='Leave this group'>X</button> " + 
+				` ${group.id}: ${group.name} - Active: ${group.active}`;
+		btn.children[0].addEventListener('click', function(e) {
+			e.preventDefault();
+			removeGroupFromUser(user, group.id)
+		});
+		dropdown.append(btn);
+	}
 }
 
 let updateUser = function(id, user) {
@@ -440,4 +489,40 @@ let deleteUser = function(id) {
 		}
 	}
 	xhr.send(id);
+}
+
+let removeGroupFromUser = function(user, gid) {
+	var xhr = new XMLHttpRequest();
+	
+	xhr.open('DELETE', `api/users/${user.id}/groups/${gid}`, true);
+	
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status == 204) {
+				populateUserData(user);
+			} else {
+				console.log("DELETE request failed.");
+				console.error(xhr.status + ': ' + xhr.responseText);
+			}
+		}
+	}
+	xhr.send(user.id, gid);
+}
+
+
+let addGroupToUser = function(uid, gid) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('PUT', `api/users/${uid}/groups/${gid}`, true);
+	
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status == 200) {
+				populateUserData(JSON.parse(xhr.responseText));
+			} else {
+				console.log("PUT request failed.");
+				console.error(xhr.status + ': ' + xhr.responseText);
+			}
+		}
+	}
+	xhr.send(uid, gid);
 }

@@ -38,3 +38,13 @@
 	flex-direction: column;
 	justify-content: center;
 }
+
+.redx {
+	color:red;
+	font-weight:bold;
+}
+
+.greencheck {
+	color:green;
+	font-weight:bold;
+}

@@ -115,12 +115,12 @@
 									</div>
 									<div class="form-group col-md-4">
 										<label for="height">Height(in)</label> <input type="number"
-											min="0" step=".1" max="999" class="form-control" id="height"
+											min="0" step=".1" max="999" value="0" class="form-control" id="height"
 											name="height">
 									</div>
 									<div class="form-group col-md-4">
 										<label for="weight">Weight(lb)</label> <input type="number"
-											min="0" step=".1" max="1000" class="form-control" id="weight"
+											min="0" step=".1" max="1000" value="0" class="form-control" id="weight"
 											name="weight">
 									</div>
 								</div>
@@ -144,6 +144,21 @@
 										<br />
 										<button type="button" class="btn btn-sm btn-danger"
 											id="userDeleteBtn">Delete User</button>
+									</div>
+									<div class="col-md-8">
+										<div class="dropdown flexme">
+											<button class="btn btn-primary btn-sm dropdown-toggle"
+												type="button" id="usergroupList" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false">Member of:</button>
+											<div class="dropdown-menu" aria-labelledby="usergroupList"
+												id="usergroupListInnerDiv"></div>
+										</div>
+										<br />
+										<div class="dropdown ">
+											<label for="addUserToGroup">Join Group ID:</label>
+											<input type="text" id="addUserToGroup" name="addUserToGroup">
+											<button type="button" class="btn btn-primary btn-sm" id="addUserToGroupBtn">GO</button>
+										</div>
 									</div>
 								</div>
 							</form>
@@ -192,11 +207,11 @@
 									<div class="col-md-8">
 										<div class="dropdown flexme">
 											<button class="btn btn-primary btn-sm dropdown-toggle"
-												type="button" id="usergroupList" data-toggle="dropdown"
+												type="button" id="groupuserList" data-toggle="dropdown"
 												aria-haspopup="true" aria-expanded="false">Group
 												Members</button>
-											<div class="dropdown-menu" aria-labelledby="usergroupList"
-												id="usergroupListInnerDiv"></div>
+											<div class="dropdown-menu" aria-labelledby="groupuserList"
+												id="groupuserListInnerDiv"></div>
 										</div>
 										<br />
 										<div class="dropdown flexme">

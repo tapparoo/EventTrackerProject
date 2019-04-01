@@ -56,7 +56,7 @@ public class UserController {
 		if (groups.size() > 0) {
 			resp.setStatus(200);
 		} else {
-			resp.setStatus(404);
+			resp.setStatus(204);
 		}
 		return groups;
 	}
@@ -127,11 +127,7 @@ public class UserController {
 	@DeleteMapping("{id}")
 	public boolean deleteUser(@PathVariable("id") Integer id, HttpServletResponse resp) {
 		boolean deleted = false;
-		try {
-			deleted = serv.deleteUser(serv.findUserById(id));
-		} catch (Exception e) {
-			resp.setHeader("error", "You must reassign the admins of this user's groups/events before deleting");
-		}
+		deleted = serv.deleteUser(serv.findUserById(id));
 		if (!deleted) {
 			resp.setStatus(404);
 		} else {
@@ -141,22 +137,26 @@ public class UserController {
 	}
 
 	@DeleteMapping("{id}/groups/{gid}")
-	public User removeUserFromGroup(@PathVariable("id") Integer id, @PathVariable("gid") Integer gid,
-			HttpServletResponse resp) throws SQLIntegrityConstraintViolationException {
+	public boolean removeUserFromGroup(@PathVariable("id") Integer id, @PathVariable("gid") Integer gid,
+			HttpServletResponse resp) {
 		User user = serv.findUserById(id);
 		Usergroup group = groupServ.findUsergroupById(gid);
 		List<Usergroup> groups = serv.findGroupsByUserId(id);
-
-		if (!groups.contains(group)) {
+		if (groups == null || !groups.contains(group)) {
 			resp.setStatus(400);
 		} else if (user != null && group != null) {
 			user.removeUsergroup(group);
-			serv.modifyUser(user);
-			resp.setStatus(200);
+			try {
+				serv.modifyUser(user);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			resp.setStatus(204);
+			return true;
 		} else {
 			resp.setStatus(404);
 		}
-		return user;
+		return false;
 	}
 
 }

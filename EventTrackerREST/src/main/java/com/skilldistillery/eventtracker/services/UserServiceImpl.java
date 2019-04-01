@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public boolean deleteUser(User user) throws SQLIntegrityConstraintViolationException {
+	public boolean deleteUser(User user) {
 		Optional<User> userOpt = repo.findById(user.getId());
 		if(userOpt.isPresent()) {
 			repo.delete(userOpt.get());

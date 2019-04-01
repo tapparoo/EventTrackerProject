@@ -32,6 +32,16 @@ let listeners = (function(e) {
 					deleteUser(id);
 				}
 			})
+	document.getElementById('addUserToGroupBtn').addEventListener('click',
+			function(e) {
+				e.preventDefault();
+				let uid = userForm.uid.value;
+				let gid = document.getElementById('addUserToGroup').value;
+				if (uid && gid > 0) {
+					addGroupToUser(uid, gid);
+				}
+			})
+
 	document.getElementById('newUserBtn').addEventListener('click',
 			function(e) {
 				e.preventDefault();
@@ -41,10 +51,10 @@ let listeners = (function(e) {
 			function(e) {
 				e.preventDefault();
 				let group = {
-						id : groupForm.gid.value,
-						name : groupForm.gname.value,
-						description : groupForm.gdesc.value,
-						active : groupForm.groupIsActive.checked
+					id : groupForm.gid.value,
+					name : groupForm.gname.value,
+					description : groupForm.gdesc.value,
+					active : groupForm.groupIsActive.checked
 				};
 				updateGroup(JSON.stringify(group));
 			})
