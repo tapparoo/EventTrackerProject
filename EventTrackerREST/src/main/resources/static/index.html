@@ -109,19 +109,23 @@
 									</div>
 								</div>
 								<div class="form-row">
-									<div class="form-group col-md-4">
+									<div class="form-group col-md-3">
 										<label for="age">Age</label> <input type="number" min="0"
 											max="130" class="form-control" id="age" name="age">
 									</div>
-									<div class="form-group col-md-4">
+									<div class="form-group col-md-3">
 										<label for="height">Height(in)</label> <input type="number"
-											min="0" step=".1" max="999" value="0" class="form-control" id="height"
-											name="height">
+											min="0" step=".1" max="999" value="0" class="form-control"
+											id="height" name="height">
 									</div>
-									<div class="form-group col-md-4">
+									<div class="form-group col-md-3">
 										<label for="weight">Weight(lb)</label> <input type="number"
-											min="0" step=".1" max="1000" value="0" class="form-control" id="weight"
-											name="weight">
+											min="0" step=".1" max="1000" value="0" class="form-control"
+											id="weight" name="weight">
+									</div>
+									<div class="form-group col-md-3">
+										<label for="bmi">BMI</label> <input type="text"
+											class="form-control" id="bmi" name="bmi" disabled>
 									</div>
 								</div>
 								<div class="form-row">
@@ -140,8 +144,7 @@
 										</div>
 										<button type="submit" class="btn btn-sm btn-primary"
 											id="userSaveBtn">Save</button>
-										<br />
-										<br />
+										<br /> <br />
 										<button type="button" class="btn btn-sm btn-danger"
 											id="userDeleteBtn">Delete User</button>
 									</div>
@@ -149,15 +152,17 @@
 										<div class="dropdown flexme">
 											<button class="btn btn-primary btn-sm dropdown-toggle"
 												type="button" id="usergroupList" data-toggle="dropdown"
-												aria-haspopup="true" aria-expanded="false">Member of:</button>
+												aria-haspopup="true" aria-expanded="false">Member
+												of:</button>
 											<div class="dropdown-menu" aria-labelledby="usergroupList"
 												id="usergroupListInnerDiv"></div>
 										</div>
 										<br />
 										<div class="dropdown ">
-											<label for="addUserToGroup">Join Group ID:</label>
-											<input type="text" id="addUserToGroup" name="addUserToGroup">
-											<button type="button" class="btn btn-primary btn-sm" id="addUserToGroupBtn">GO</button>
+											<label for="addUserToGroup">Join Group ID:</label> <input
+												type="text" id="addUserToGroup" name="addUserToGroup">
+											<button type="button" class="btn btn-primary btn-sm"
+												id="addUserToGroupBtn">GO</button>
 										</div>
 									</div>
 								</div>
@@ -199,8 +204,7 @@
 										</div>
 										<button type="submit" class="btn btn-sm btn-primary"
 											id="groupSaveBtn">Save</button>
-										<br />
-										<br />
+										<br /> <br />
 										<button type="button" class="btn btn-sm btn-danger"
 											id="groupDeleteBtn">Delete Group</button>
 									</div>
@@ -248,11 +252,6 @@
 											id="edesc" name="edesc" class="form-control"
 											placeholder="Description">
 									</div>
-									<div class="form-group col-md-6">
-										<label for="eventAdmin">Event admin</label> <input
-											type="email" id="eventAdmin" name="eventAdmin"
-											class="form-control" placeholder="Event admin email">
-									</div>
 								</div>
 
 								<div class="form-row">
@@ -267,8 +266,7 @@
 										</div>
 										<button type="submit" class="btn btn-sm btn-primary"
 											id="eventSaveBtn">Save</button>
-										<br />
-										<br />
+										<br /> <br />
 										<button type="button" class="btn btn-sm btn-danger"
 											id="eventDeleteBtn">Delete Event</button>
 									</div>

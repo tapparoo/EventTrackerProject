@@ -17,44 +17,43 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class User {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name="first_name")
+
+	@Column(name = "first_name")
 	private String firstName;
-	@Column(name="last_name")
+	@Column(name = "last_name")
 	private String lastName;
 	private String username;
 	private String password;
 	private String email;
 	private int age;
-	@Column(name="height_in_inches")
+	@Column(name = "height_in_inches")
 	private Double heightInInches;
-	@Column(name="weight_in_pounds")
+	@Column(name = "weight_in_pounds")
 	private Double weightInPounds;
 	private boolean active;
 	private boolean admin;
 
 	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name="user_usergroup",
-		joinColumns=@JoinColumn(name="user_id"),
-		inverseJoinColumns=@JoinColumn(name="usergroup_id"))
+	@JoinTable(name = "user_usergroup", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "usergroup_id"))
 	private List<Usergroup> usergroups;
 
 	public void addUsergroup(Usergroup group) {
-		if (usergroups == null) usergroups = new ArrayList<>();
+		if (usergroups == null)
+			usergroups = new ArrayList<>();
 		if (!usergroups.contains(group)) {
 			usergroups.add(group);
 		}
 	}
-	
+
 	public void removeUsergroup(Usergroup group) {
 		if (usergroups != null && usergroups.contains(group)) {
 			usergroups.remove(group);
 		}
 	}
-	
+
 	public int getId() {
 		return id;
 	}

@@ -44,47 +44,53 @@ let loadGroupDropdown = function(groups) {
 	}
 }
 
-let loadGroupUsersDropdown = function(users) {
+let loadGroupUsersDropdown = function(users, group) {
 	let dropdown = document.getElementById('groupuserListInnerDiv');
 	let btns = dropdown.getElementsByClassName('dropdown-item');
-	
+
 	if (btns.length > 1) {
 		for (let i = btns.length - 1; i >= 0; i--) {
 			dropdown.removeChild(btns[i]);
 		}
 	}
-	
+
 	for (let i = 0; i < users.length; i++) {
 		let user = users[i];
 		let btn = document.createElement('button');
 		btn.classList.add('dropdown-item');
 		btn.setAttribute('type', 'button');
-		btn.textContent = `${user.id}: ${user.firstName} ${user.lastName} - ${user.username}`;
-		btn.addEventListener('click', function() {
-			populateUserData(user)
+		btn.innerHTML = "<button class='redx' data-toggle='tooltip' "
+			+ "data-placement='left' title='Leave this group'>X</button> "
+			+ ` ${user.id}: ${user.firstName} ${user.lastName} - ${user.username}`;
+		btn.children[0].addEventListener('click', function(e) {
+			e.preventDefault();
+			removeUserFromGroup(user.id, group);
 		});
 		dropdown.append(btn);
 	}
 }
 
-let loadGroupEventsDropdown = function(events) {
+let loadGroupEventsDropdown = function(events, group) {
 	let dropdown = document.getElementById('groupeventListInnerDiv');
 	let btns = dropdown.getElementsByClassName('dropdown-item');
-	
+
 	if (btns.length > 1) {
 		for (let i = btns.length - 1; i >= 0; i--) {
 			dropdown.removeChild(btns[i]);
 		}
 	}
-	
+
 	for (let i = 0; i < events.length; i++) {
 		let event = events[i];
 		let btn = document.createElement('button');
 		btn.classList.add('dropdown-item');
 		btn.setAttribute('type', 'button');
-		btn.textContent = `${event.id}: ${event.name} - Active: ${event.active}`;
-		btn.addEventListener('click', function() {
-			populateEventData(event)
+		btn.innerHTML = "<button class='redx' data-toggle='tooltip' "
+			+ "data-placement='left' title='Leave this group'>X</button> "
+			+ ` ${event.id}: ${event.name} - Active: ${event.active}`;
+		btn.children[0].addEventListener('click', function(e) {
+			e.preventDefault();
+			removeEventFromGroup(event.id, group);
 		});
 		dropdown.append(btn);
 	}
@@ -98,8 +104,8 @@ let populateGroupData = function(group) {
 		groupForm.gname.value = group.name;
 		groupForm.gdesc.value = group.description;
 		groupForm.groupIsActive.checked = group.active;
-		getUsersByGroup(group.id);
-		getEventsByGroup(group.id);
+		getUsersByGroup(group);
+		getEventsByGroup(group);
 	} else {
 		groupForm.gid.value = '';
 		groupForm.gname.value = '';
@@ -109,33 +115,33 @@ let populateGroupData = function(group) {
 	$('#nav-group-tab').click();
 }
 
-let getUsersByGroup = function(id) {
+let getUsersByGroup = function(group) {
 	let xhr = new XMLHttpRequest();
-	
-	xhr.open('GET', `api/groups/${id}/users`, true);
+
+	xhr.open('GET', `api/groups/${group.id}/users`, true);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4 && xhr.status < 400) {
 			var data = JSON.parse(xhr.responseText);
-			loadGroupUsersDropdown(data);
+			loadGroupUsersDropdown(data, group);
 		}
-		
+
 		if (xhr.readyState === 4 && xhr.status >= 400) {
 			console.error(xhr.status + ': ' + xhr.responseText);
 		}
 	};
-	
+
 	xhr.send(null);
 }
 
-let getEventsByGroup = function(id) {
+let getEventsByGroup = function(group) {
 	let xhr = new XMLHttpRequest();
-	let path = `api/groups/${id}/events`
+	let path = `api/groups/${group.id}/events`
 	xhr.open('GET', path, true);
 
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4 && xhr.status < 400) {
 			var data = JSON.parse(xhr.responseText);
-			loadGroupEventsDropdown(data);
+			loadGroupEventsDropdown(data, group);
 		}
 
 		if (xhr.readyState === 4 && xhr.status >= 400) {
@@ -190,6 +196,42 @@ let deleteGroup = function(id) {
 		}
 	}
 	xhr.send(id);
+}
+
+let removeUserFromGroup = function(uid, group) {
+	var xhr = new XMLHttpRequest();
+
+	xhr.open('DELETE', `api/users/${uid}/groups/${group.id}`, true);
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status == 204) {
+				populateGroupData(group);
+			} else {
+				console.log("DELETE request failed.");
+				console.error(xhr.status + ': ' + xhr.responseText);
+			}
+		}
+	}
+	xhr.send(uid, group.id);
+}
+
+let removeEventFromGroup = function(eid, group) {
+	var xhr = new XMLHttpRequest();
+	
+	xhr.open('DELETE', `api/groups/${group.id}/events/${eid}`, true);
+	
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status == 204) {
+				populateGroupData(group);
+			} else {
+				console.log("DELETE request failed.");
+				console.error(xhr.status + ': ' + xhr.responseText);
+			}
+		}
+	}
+	xhr.send(uid, group.id);
 }
 
 /*
@@ -324,7 +366,7 @@ let getAllUsers = function() {
 	xhr.send(null);
 }
 
-let getUserById = function(id){
+let getUserById = function(id) {
 	let xhr = new XMLHttpRequest();
 
 	xhr.open('GET', `api/users/${id}`, true);
@@ -350,7 +392,7 @@ let getGroupsByUser = function(user) {
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4 && xhr.status < 400) {
 			let data = xhr.responseText;
-			if(data !== ''){
+			if (data !== '') {
 				data = JSON.parse(xhr.responseText);
 			}
 			loadUserGroupsDropdown(user, data);
@@ -402,6 +444,16 @@ let populateUserData = function(user) {
 		userForm.uid.value = user.id;
 		userForm.admin.checked = user.admin;
 		userForm.active.checked = user.active;
+		if (user.heightInInches > 0 && user.weightInPounds > 0) {
+			let bmi = "" + (user.weightInPounds
+					/ (user.heightInInches * user.heightInInches) * 705.0);
+			if (bmi.length > 4) {
+				userForm.bmi.value = bmi.substring(0, 4);
+			}
+		} else {
+			userForm.bmi.value = 0.0;
+		}
+
 		getGroupsByUser(user)
 	} else {
 		userForm.firstName.value = '';
@@ -428,15 +480,15 @@ let loadUserGroupsDropdown = function(user, groups) {
 			dropdown.removeChild(btns[i]);
 		}
 	}
-	
+
 	for (let i = 0; i < groups.length; i++) {
 		let group = groups[i];
 		let btn = document.createElement('button');
 		btn.classList.add('dropdown-item');
 		btn.setAttribute('type', 'button');
-		btn.innerHTML = "<button class='redx' data-toggle='tooltip' " +
-				"data-placement='left' title='Leave this group'>X</button> " + 
-				` ${group.id}: ${group.name} - Active: ${group.active}`;
+		btn.innerHTML = "<button class='redx' data-toggle='tooltip' "
+				+ "data-placement='left' title='Leave this group'>X</button> "
+				+ ` ${group.id}: ${group.name} - Active: ${group.active}`;
 		btn.children[0].addEventListener('click', function(e) {
 			e.preventDefault();
 			removeGroupFromUser(user, group.id)
@@ -493,9 +545,9 @@ let deleteUser = function(id) {
 
 let removeGroupFromUser = function(user, gid) {
 	var xhr = new XMLHttpRequest();
-	
+
 	xhr.open('DELETE', `api/users/${user.id}/groups/${gid}`, true);
-	
+
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
 			if (xhr.status == 204) {
@@ -509,11 +561,10 @@ let removeGroupFromUser = function(user, gid) {
 	xhr.send(user.id, gid);
 }
 
-
 let addGroupToUser = function(uid, gid) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('PUT', `api/users/${uid}/groups/${gid}`, true);
-	
+
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
 			if (xhr.status == 200) {
