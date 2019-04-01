@@ -1,24 +1,40 @@
-.tab-pane > .container{
+.navbar {
+	background-color: #62686b !important;
+}
+
+.navbar-brand, #navSearchButton {
+	color: white !important;
+	font-weight: bold;
+}
+
+#navbarSupportedContent, .btn-outline-warning {
+	background-color: #62686b;
+	border-color: #caced3 !important;
+	color: white !important;
+	margin: 5px;
+	justify-content: flex-end;
+}
+.tab-pane>.container {
 	border: thin solid #62686b;
-	padding:20px;
+	padding: 20px;
 }
 
 .row-content {
 	margin-top: 50px;
 }
 
-.row-content > .col > .dropdown {
+.row-content>.col>.dropdown {
 	margin-bottom: 30px;
 }
 
 .date-info {
-    font-size: .5em;
-    color: grey;
+	font-size: .5em;
+	color: grey;
 }
 
 .flexme {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
 }
