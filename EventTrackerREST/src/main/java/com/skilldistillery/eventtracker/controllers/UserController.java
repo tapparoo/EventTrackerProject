@@ -127,6 +127,7 @@ public class UserController {
 	@DeleteMapping("{id}")
 	public boolean deleteUser(@PathVariable("id") Integer id, HttpServletResponse resp) {
 		boolean deleted = false;
+		
 		deleted = serv.deleteUser(serv.findUserById(id));
 		if (!deleted) {
 			resp.setStatus(404);
