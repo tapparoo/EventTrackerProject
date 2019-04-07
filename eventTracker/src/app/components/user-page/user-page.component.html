@@ -1,0 +1,240 @@
+
+<!--
+        DISPLAY USER FORM
+ -->
+
+ <div *ngIf="selected && !editMode" class="container">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8 form">
+      <form name="userForm">
+        <div class="flexme">
+          <button class="btn btn-sm btn-danger" (click)="this.editMode = true;">Edit User</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="username">Username</label> <input type="text"
+              name="username" class="form-control" disabled
+               [ngModel]="selected.username">
+          </div>
+          <div class="col-md-4"></div>
+          <div class="form-group col-md-2">
+            <label for="id">User ID</label> <input type="text"
+              name="id" class="form-control" disabled [ngModel]="selected.id">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="fname">First Name</label> <input type="text"
+               name="firstName" class="form-control" disabled [ngModel]="selected.firstName">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="lname">Last Name</label> <input type="text"
+               name="lastName" class="form-control" disabled [ngModel]="selected.lastName">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="email">Email</label> <input type="email"
+              class="form-control"  name="email" disabled [ngModel]="selected.email">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="password">Password</label> <input type="password"
+              class="form-control"  name="password" disabled [ngModel]="selected.password">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="age">Age</label> <input type="number" min="0"
+              max="130" class="form-control"  name="age" disabled [ngModel]="selected.age">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="height">Height(in)</label> <input type="number"
+              min="0" step=".1" max="999" value="0" class="form-control"
+               name="height" disabled [ngModel]="selected.heightInInches">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="weight">Weight(lb)</label> <input type="number"
+              min="0" step=".1" max="1000" value="0" class="form-control"
+               name="weight" disabled [ngModel]="selected.weightInPounds">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="bmi">BMI</label> <input type="text"
+              class="form-control"  name="bmi" disabled>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                  name="active" disabled [ngModel]="selected.active"> <label class="form-check-label"
+                  for="active"> Enabled? </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                  name="admin" disabled [ngModel]="selected.admin"> <label class="form-check-label"
+                  for="admin"> Admin? </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="row flexme">
+                <div>
+                  <div ngbDropdown class="d-inline-block">
+                    <button class="btn btn-primary" id="usergroupList" ngbDropdownToggle>Member of:</button>
+                    <div ngbDropdownMenu aria-labelledby="usergroupList">
+                      <button  *ngFor="let g of selected.groups" [routerLink]="['/groups/' + g.id]" ngbDropdownItem>
+                          <button (click)="removeFromGroup(selected.id, g.id)" class='redx' data-toggle='tooltip' data-placement='left' title='Leave this group'>X</button>
+                          {{g.id}}: {{g.name}} - Active: {{g.active}}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div>
+              <label for="addUserToGroup">Join Group ID:</label> <input type="text"  #addUserToGroup>
+              <button type="button" (click)="joinGroup(selected.id, addUserToGroup.value)" class="btn btn-primary btn-sm">GO</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>
+
+<!--
+        EDIT USER FORM
+ -->
+
+<div *ngIf="selected && editMode" class="container">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8 form">
+      <form #EditUserForm="ngForm">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="username">Username</label> <input type="text"
+              name="username" class="form-control"
+               [ngModel]="selected.username">
+          </div>
+          <div class="col-md-4"></div>
+          <div class="form-group col-md-2">
+            <label for="id">User ID</label> <input type="text"
+              name="id" class="form-control" disabled [ngModel]="selected.id">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="fname">First Name</label> <input type="text"
+               name="firstName" class="form-control" [ngModel]="selected.firstName">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="lname">Last Name</label> <input type="text"
+               name="lastName" class="form-control" [ngModel]="selected.lastName">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="email">Email</label> <input type="email"
+              class="form-control"  name="email" [ngModel]="selected.email">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="password">Password</label> <input type="password"
+              class="form-control"  name="password" [ngModel]="selected.password">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label for="age">Age</label> <input type="number" min="0"
+              max="130" class="form-control"  name="age" [ngModel]="selected.age">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="height">Height(in)</label> <input type="number"
+              min="0" step=".1" max="999" value="0" class="form-control"
+               name="height" [ngModel]="selected.heightInInches">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="weight">Weight(lb)</label> <input type="number"
+              min="0" step=".1" max="1000" value="0" class="form-control"
+               name="weight" [ngModel]="selected.weightInPounds">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="bmi">BMI</label> <input type="text"
+              class="form-control"  name="bmi" disabled>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                  name="active" [ngModel]="selected.active"> <label class="form-check-label"
+                  for="active"> Enabled? </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox"
+                  name="admin" [ngModel]="selected.admin"> <label class="form-check-label"
+                  for="admin"> Admin? </label>
+              </div>
+            </div>
+            <button type="submit" (click)="editUser(EditUserForm)" class="btn btn-sm btn-primary"
+              >Save</button>
+            <br /> <br />
+            <button type="button" (click)="deleteUser(selected.id)" class="btn btn-sm btn-danger"
+              >Delete User</button>
+          </div>
+          <div class="col-md-8">
+              <div class="row flexme">
+                  <div>
+                    <div ngbDropdown class="d-inline-block">
+                      <button class="btn btn-primary" id="usergroupList" ngbDropdownToggle>Member of:</button>
+                      <div ngbDropdownMenu aria-labelledby="usergroupList">
+                        <button  *ngFor="let g of selected.groups" [routerLink]="['/groups/' + g.id]" ngbDropdownItem>
+                            <button (click)="removeFromGroup(selected.id, g.id)" class='redx' data-toggle='tooltip' data-placement='left' title='Leave this group'>X</button>
+                            {{g.id}}: {{g.name}} - Active: {{g.active}}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div>
+                <label for="addUserToGroup">Join Group ID:</label> <input type="text"  #addUserToGroup>
+                <button type="button" (click)="joinGroup(selected.id, addUserToGroup.value)" class="btn btn-primary btn-sm">GO</button>
+              </div>
+            </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>
+
+<div *ngIf="!selected && !editMode && !newUser" class="container">
+  <br><br>
+  <table mdbTable class="z-depth-1">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Enabled?</th>
+        <th>Admin?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users" [routerLink]="['/users/' + user.id]">
+        <th scope="row">{{user.id}}</th>
+        <td>{{user.username}}</td>
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.active}}</td>
+        <td>{{user.admin}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

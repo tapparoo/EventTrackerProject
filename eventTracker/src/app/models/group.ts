@@ -1,10 +1,10 @@
-export class UserGroup {
+export class Group {
   id: number;
   name: string;
   description: string;
   active: boolean;
 
-  UserGroup(
+  Group(
     id?: number,
     name: string = '',
     desc: string = '',

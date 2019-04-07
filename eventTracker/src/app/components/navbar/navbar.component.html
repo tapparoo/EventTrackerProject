@@ -1,12 +1,29 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-  <a class="navbar-brand" href="">Event Tracker</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse"
-    data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false"
-    aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" [routerLink]="['/home']">Event Tracker</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    Logged in as: Administrator</div>
-</nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/users']">Users </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/newuser']">New User </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/groups']">Groups</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/newgroup']">New Group </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/events']">Events</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/newevent']">New Event </a>
+        </li>
+      </ul>
+    </div>
+  </nav>

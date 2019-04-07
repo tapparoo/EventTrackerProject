@@ -1,6 +1,5 @@
 package com.skilldistillery.eventtracker.services;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +28,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public User findUserByUsername(String username) {
+		return repo.findByUsername(username);
+	}
+	
+	@Override
 	public List<Usergroup> findGroupsByUserId(int id){
 		return repo.findUsergroupByUserId(id);
 	}
@@ -39,12 +43,28 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User addUser(User user) throws SQLIntegrityConstraintViolationException{
+	public User addUser(User user) {
+		User byEmail = findUserByEmail(user.getEmail());
+		User byUsername = findUserByUsername(user.getUsername());
+		
+		// Check DB for pre-existing unique fields
+		if (byEmail != null || byUsername != null) {
+			return null;
+		}
+		
 		return repo.saveAndFlush(user);
 	}
 	
 	@Override
-	public User modifyUser(User user) throws SQLIntegrityConstraintViolationException{
+	public User modifyUser(User user) {
+		User byEmail = findUserByEmail(user.getEmail());
+		User byUsername = findUserByUsername(user.getUsername());
+		
+		// Check DB for pre-existing unique fields
+		if ((byEmail != null && byEmail.getId() != user.getId()) || 
+				(byUsername != null && byUsername.getId() != user.getId())) {
+			return null;
+		}
 		return repo.saveAndFlush(user);
 	}
 	

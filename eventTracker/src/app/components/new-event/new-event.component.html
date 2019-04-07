@@ -1,0 +1,43 @@
+ <!--
+            GROUP CREATE FORM
+
+         -->
+         <div *ngIf="newEvent" class="container">
+            <div class="row">
+              <div class="col-2"></div>
+              <div class="col-8 form">
+                <div class="container">
+                    <form #EventForm="ngForm">
+                      <div class="form-row">
+                        <div class="form-event col-md-6">
+                          <label for="name">Name</label> <input type="text"
+                            name="name" class="form-control" ngModel>
+                        </div>
+                        <div class="col-md-4"></div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-event col-md-6">
+                          <label for="description">Description</label> <input
+                            type="text" name="description" class="form-control" ngModel >
+                        </div>
+                      </div>
+
+                      <div class="form-row">
+                        <div class="col-md-4">
+                          <div class="form-event">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox"
+                                name="active" ngModel> <label
+                                class="form-check-label" for="active">
+                                Enabled? </label>
+                            </div>
+                          </div>
+                          <button type="submit" (click)="addEvent(EventForm)" class="btn btn-sm btn-primary">Save</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="col-2"></div>
+              </div>
+            </div>

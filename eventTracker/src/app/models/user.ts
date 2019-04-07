@@ -27,5 +27,8 @@ export class User {
     this.username = username;
     this.password = password;
     this.email = email;
+    this.age = age;
+    this.heightInInches = heightInInches;
+    this.weightInPounds = weightInPounds;
   }
 }

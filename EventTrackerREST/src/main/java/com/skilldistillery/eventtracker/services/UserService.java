@@ -1,6 +1,5 @@
 package com.skilldistillery.eventtracker.services;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import com.skilldistillery.eventtracker.User;
@@ -10,10 +9,11 @@ public interface UserService {
 
 	User findUserById(int id);
 	List<User> findAllUsers();
-	User addUser(User user) throws SQLIntegrityConstraintViolationException;
-	User modifyUser(User user) throws SQLIntegrityConstraintViolationException;
+	User addUser(User user);
+	User modifyUser(User user);
 	boolean deleteUser(User user);
 	List<Usergroup> findGroupsByUserId(int id);
 	User findUserByEmail(String email);
+	User findUserByUsername(String username);
 
 }

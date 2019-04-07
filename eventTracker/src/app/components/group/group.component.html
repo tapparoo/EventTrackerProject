@@ -1,5 +1,5 @@
 <!--
-        EVENT DISPLAY FORM
+        GROUP DISPLAY FORM
 
      -->
      <div *ngIf="selected && !editMode" class="container">
@@ -7,23 +7,23 @@
           <div class="col-2"></div>
           <div class="col-8 form">
             <div class="container">
-                <form name="eventForm">
+                <form name="groupForm">
                   <div class="flexme">
-                      <button class="btn btn-sm btn-danger" (click)="this.editMode = true;">Edit Event</button>
+                      <button class="btn btn-sm btn-danger" (click)="this.editMode = true;">Edit Group</button>
                     </div>
                   <div class="form-row">
-                    <div class="form-event col-md-6">
+                    <div class="form-group col-md-6">
                       <label for="name">Name</label> <input type="text"
                         name="name" class="form-control" [ngModel]="selected.name"  disabled>
                     </div>
                     <div class="col-md-4"></div>
-                    <div class="form-event col-md-2">
-                      <label for="id">Event ID</label> <input type="text"
+                    <div class="form-group col-md-2">
+                      <label for="id">Group ID</label> <input type="text"
                         name="id" class="form-control" [ngModel]="selected.id"  disabled>
                     </div>
                   </div>
                   <div class="form-row">
-                    <div class="form-event col-md-6">
+                    <div class="form-group col-md-6">
                       <label for="description">Description</label> <input
                         type="text" name="description" class="form-control" [ngModel]="selected.description"  disabled>
                     </div>
@@ -31,7 +31,7 @@
 
                   <div class="form-row">
                     <div class="col-md-4">
-                      <div class="form-event">
+                      <div class="form-group">
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox"
                             name="active" [ngModel]="selected.active" disabled> <label
@@ -41,22 +41,26 @@
                       </div>
                     </div>
                     <div class="col-md-8">
-                      <div class="dropdown flexme">
-                        <button class="btn btn-primary btn-sm dropdown-toggle"
-                          type="button" id="eventuserList" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">Event
-                          Members</button>
-                        <div class="dropdown-menu" aria-labelledby="eventuserList"
-                          id="eventuserListInnerDiv"></div>
-                      </div>
+                        <div class="row flexme">
+                            <div>
+                              <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-primary btn-sm" name="groupUserList" ngbDropdownToggle>Group Members:</button>
+                                <div ngbDropdownMenu aria-labelledby="groupUserList">
+                                  <button  [routerLink]="['/users/' + u.id]" *ngFor="let u of selected.users" ngbDropdownItem>
+                                      {{u.id}}: {{u.username}} - Active: {{u.active}}
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
                       <br />
                       <div class="dropdown flexme">
                         <button class="btn btn-primary btn-sm dropdown-toggle"
-                          type="button" id="eventeventList" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">Event
+                          type="button" id="groupeventList" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false">Group
                           Events</button>
-                        <div class="dropdown-menu" aria-labelledby="eventeventList"
-                          id="eventeventListInnerDiv"></div>
+                        <div class="dropdown-menu" aria-labelledby="groupeventList"
+                          id="groupeventListInnerDiv"></div>
                       </div>
                     </div>
                   </div>
@@ -67,7 +71,7 @@
           </div>
         </div>
     <!--
-            EVENT EDIT FORM
+            GROUP EDIT FORM
 
          -->
     <div *ngIf="selected && editMode" class="container">
@@ -75,20 +79,20 @@
           <div class="col-2"></div>
           <div class="col-8 form">
             <div class="container">
-                <form #EventForm="ngForm">
+                <form #GroupForm="ngForm">
                   <div class="form-row">
-                    <div class="form-event col-md-6">
+                    <div class="form-group col-md-6">
                       <label for="name">Name</label> <input type="text"
                         name="name" class="form-control" [ngModel]="selected.name" >
                     </div>
                     <div class="col-md-4"></div>
-                    <div class="form-event col-md-2">
-                      <label for="id">Event ID</label> <input type="text"
+                    <div class="form-group col-md-2">
+                      <label for="id">Group ID</label> <input type="text"
                         name="id" class="form-control" [ngModel]="selected.id" disabled>
                     </div>
                   </div>
                   <div class="form-row">
-                    <div class="form-event col-md-6">
+                    <div class="form-group col-md-6">
                       <label for="description">Description</label> <input
                         type="text" name="description" class="form-control" [ngModel]="selected.description" >
                     </div>
@@ -96,7 +100,7 @@
 
                   <div class="form-row">
                     <div class="col-md-4">
-                      <div class="form-event">
+                      <div class="form-group">
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox"
                             name="active" [ngModel]="selected.active"> <label
@@ -104,27 +108,31 @@
                             Enabled? </label>
                         </div>
                       </div>
-                      <button type="submit" (click)="editEvent(EventForm)" class="btn btn-sm btn-primary">Save</button>
+                      <button type="submit" (click)="editGroup(GroupForm)" class="btn btn-sm btn-primary">Save</button>
                       <br /> <br />
-                      <button type="button" (click)="deleteEvent(selected.id)" class="btn btn-sm btn-danger">Delete Event</button>
+                      <button type="button" (click)="deleteGroup(selected.id)" class="btn btn-sm btn-danger">Delete Group</button>
                     </div>
                     <div class="col-md-8">
-                      <div class="dropdown flexme">
-                        <button class="btn btn-primary btn-sm dropdown-toggle"
-                          type="button" id="eventuserList" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">Event
-                          Members</button>
-                        <div class="dropdown-menu" aria-labelledby="eventuserList"
-                          id="eventuserListInnerDiv"></div>
-                      </div>
+                        <div class="row flexme">
+                            <div>
+                              <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-primary btn-sm" name="groupUserList" ngbDropdownToggle>Group Members:</button>
+                                <div ngbDropdownMenu aria-labelledby="groupUserList">
+                                  <button  [routerLink]="['/users/' + u.id]" *ngFor="let u of selected.users" ngbDropdownItem>
+                                      {{u.id}}: {{u.username}} - Active: {{u.active}}
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
                       <br />
                       <div class="dropdown flexme">
                         <button class="btn btn-primary btn-sm dropdown-toggle"
-                          type="button" id="eventeventList" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">Event
+                          type="button" id="groupeventList" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false">Group
                           Events</button>
-                        <div class="dropdown-menu" aria-labelledby="eventeventList"
-                          id="eventeventListInnerDiv"></div>
+                        <div class="dropdown-menu" aria-labelledby="groupeventList"
+                          id="groupeventListInnerDiv"></div>
                       </div>
                     </div>
                   </div>
@@ -135,7 +143,7 @@
           </div>
         </div>
 
-        <div *ngIf="!selected && !editMode && !newEvent" class="container">
+        <div *ngIf="!selected && !editMode && !newGroup" class="container">
             <br><br>
             <table mdbTable class="z-depth-1">
               <thead>
@@ -147,11 +155,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let event of events" [routerLink]="['/events/' + event.id]">
-                  <th scope="row">{{event.id}}</th>
-                  <td>{{event.name}}</td>
-                  <td>{{event.description}}</td>
-                  <td>{{event.active}}</td>
+                <tr *ngFor="let group of groups" [routerLink]="['/groups/' + group.id]">
+                  <th scope="row">{{group.id}}</th>
+                  <td>{{group.name}}</td>
+                  <td>{{group.description}}</td>
+                  <td>{{group.active}}</td>
                 </tr>
               </tbody>
             </table>
