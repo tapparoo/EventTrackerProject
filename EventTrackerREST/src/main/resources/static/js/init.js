@@ -1,3 +1,8 @@
+
+// This is old/pre-angular code for REST API requests.  Leaving this here for reference
+
+
+
 let listeners = (function(e) {
 	window.addEventListener('load', function() {
 		getAllUsers();

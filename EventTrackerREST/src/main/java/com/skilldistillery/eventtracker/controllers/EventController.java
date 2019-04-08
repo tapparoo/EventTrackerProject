@@ -80,9 +80,7 @@ public class EventController {
 	@PutMapping("{id}")
 	public Event modifiyEvent(@PathVariable("id") Integer id, @RequestBody Event modifiedEvent, HttpServletResponse resp) {
 		modifiedEvent.setId(id);
-		System.out.println(modifiedEvent);
 		Event updatedEvent = serv.modifyEvent(modifiedEvent);
-		System.out.println(updatedEvent);
 		if(updatedEvent != null) {
 			resp.setStatus(200);
 		}else {
