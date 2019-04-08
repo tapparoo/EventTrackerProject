@@ -41,23 +41,16 @@
                       </div>
                     </div>
                     <div class="col-md-8">
-                      <div class="dropdown flexme">
-                        <button class="btn btn-primary btn-sm dropdown-toggle"
-                          type="button" id="eventuserList" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">Event
-                          Members</button>
-                        <div class="dropdown-menu" aria-labelledby="eventuserList"
-                          id="eventuserListInnerDiv"></div>
-                      </div>
-                      <br />
-                      <div class="dropdown flexme">
-                        <button class="btn btn-primary btn-sm dropdown-toggle"
-                          type="button" id="eventeventList" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">Event
-                          Events</button>
-                        <div class="dropdown-menu" aria-labelledby="eventeventList"
-                          id="eventeventListInnerDiv"></div>
-                      </div>
+                        <div class="row flexme">
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-primary btn-sm" id="eventGroupList" ngbDropdownToggle>Groups Attending:</button>
+                                <div ngbDropdownMenu aria-labelledby="eventGroupList">
+                                  <button [routerLink]="['/groups/' + g.id]" *ngFor="let g of selected.groups" ngbDropdownItem>
+                                      {{g.id}}: {{g.name}} - Active: {{g.active}}
+                                  </button>
+                                </div>
+                              </div>
+                        </div>
                     </div>
                   </div>
                 </form>
@@ -109,23 +102,16 @@
                       <button type="button" (click)="deleteEvent(selected.id)" class="btn btn-sm btn-danger">Delete Event</button>
                     </div>
                     <div class="col-md-8">
-                      <div class="dropdown flexme">
-                        <button class="btn btn-primary btn-sm dropdown-toggle"
-                          type="button" id="eventuserList" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">Event
-                          Members</button>
-                        <div class="dropdown-menu" aria-labelledby="eventuserList"
-                          id="eventuserListInnerDiv"></div>
-                      </div>
-                      <br />
-                      <div class="dropdown flexme">
-                        <button class="btn btn-primary btn-sm dropdown-toggle"
-                          type="button" id="eventeventList" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">Event
-                          Events</button>
-                        <div class="dropdown-menu" aria-labelledby="eventeventList"
-                          id="eventeventListInnerDiv"></div>
-                      </div>
+                        <div class="row flexme">
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-primary btn-sm" id="eventGroupList" ngbDropdownToggle>Groups Attending:</button>
+                                <div ngbDropdownMenu aria-labelledby="eventGroupList">
+                                  <button [routerLink]="['/groups/' + g.id]" *ngFor="let g of selected.groups" ngbDropdownItem>
+                                      {{g.id}}: {{g.name}} - Active: {{g.active}}
+                                  </button>
+                                </div>
+                              </div>
+                        </div>
                     </div>
                   </div>
                 </form>
@@ -136,7 +122,9 @@
         </div>
 
         <div *ngIf="!selected && !editMode && !newEvent" class="container">
-            <br><br>
+            <br>
+          <h2 class="flexme">Events</h2>
+            <br>
             <table mdbTable class="z-depth-1">
               <thead>
                 <tr>

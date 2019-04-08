@@ -42,6 +42,17 @@ export class EventComponent implements OnInit {
     );
   }
 
+  displayEventGroups() {
+    this.eventService.showEventGroups(this.selected.id).subscribe(
+      data => {
+        this.selected.groups = data;
+
+      },
+
+      err => console.error('Observer got an error: ' + err)
+    );
+  }
+
   displayEventTable() {
     this.eventService.index().subscribe(
       data => {
@@ -71,6 +82,13 @@ export class EventComponent implements OnInit {
       this.eventService.show(this.currentRoute.snapshot.paramMap.get('id')).subscribe(
         data => {
           this.selected = data;
+          this.eventService.showEventGroups(this.selected.id).subscribe(
+            groupData => this.selected.groups = groupData,
+
+            err => {
+              this.router.navigateByUrl('not-found');
+              console.error('Observer got an error: ' + err);
+            });
         },
 
         err => {

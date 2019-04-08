@@ -53,15 +53,18 @@
                               </div>
                             </div>
                         </div>
-                      <br />
-                      <div class="dropdown flexme">
-                        <button class="btn btn-primary btn-sm dropdown-toggle"
-                          type="button" id="groupeventList" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">Group
-                          Events</button>
-                        <div class="dropdown-menu" aria-labelledby="groupeventList"
-                          id="groupeventListInnerDiv"></div>
-                      </div>
+                        <br>
+                        <div class="row flexme">
+                            <div ngbDropdown class="d-inline-block">
+                              <button class="btn btn-primary btn-sm" id="groupEventList" ngbDropdownToggle>Group Events:</button>
+                              <div ngbDropdownMenu aria-labelledby="groupEventList">
+                                <button [routerLink]="['/events/' + evt.id]" *ngFor="let evt of selected.evts" ngbDropdownItem>
+                                    <button (click)="removeFromEvent(selected.id, evt.id)" class='redx'>X</button>
+                                    {{evt.id}}: {{evt.name}} - Active: {{evt.active}}
+                                </button>
+                              </div>
+                            </div>
+                        </div>
                     </div>
                   </div>
                 </form>
@@ -114,26 +117,27 @@
                     </div>
                     <div class="col-md-8">
                         <div class="row flexme">
-                            <div>
-                              <div ngbDropdown class="d-inline-block">
-                                <button class="btn btn-primary btn-sm" name="groupUserList" ngbDropdownToggle>Group Members:</button>
-                                <div ngbDropdownMenu aria-labelledby="groupUserList">
-                                  <button  [routerLink]="['/users/' + u.id]" *ngFor="let u of selected.users" ngbDropdownItem>
-                                      {{u.id}}: {{u.username}} - Active: {{u.active}}
-                                  </button>
-                                </div>
+                            <div ngbDropdown class="d-inline-block">
+                              <button class="btn btn-primary btn-sm" id="groupUserList" ngbDropdownToggle>Group Members:</button>
+                              <div ngbDropdownMenu aria-labelledby="groupUserList">
+                                <button  [routerLink]="['/users/' + u.id]" *ngFor="let u of selected.users" ngbDropdownItem>
+                                    {{u.id}}: {{u.username}} - Active: {{u.active}}
+                                </button>
                               </div>
                             </div>
                         </div>
                       <br />
-                      <div class="dropdown flexme">
-                        <button class="btn btn-primary btn-sm dropdown-toggle"
-                          type="button" id="groupeventList" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">Group
-                          Events</button>
-                        <div class="dropdown-menu" aria-labelledby="groupeventList"
-                          id="groupeventListInnerDiv"></div>
-                      </div>
+                        <div class="row flexme">
+                            <div ngbDropdown class="d-inline-block">
+                                <button class="btn btn-primary btn-sm" id="groupEventList" ngbDropdownToggle>Group Events:</button>
+                                <div ngbDropdownMenu aria-labelledby="groupEventList">
+                                  <button [routerLink]="['/events/' + evt.id]" *ngFor="let evt of selected.evts" ngbDropdownItem>
+                                      <button (click)="removeFromEvent(selected.id, evt.id)" class='redx'>X</button>
+                                      {{evt.id}}: {{evt.name}} - Active: {{evt.active}}
+                                  </button>
+                                </div>
+                              </div>
+                        </div>
                     </div>
                   </div>
                 </form>
@@ -144,7 +148,9 @@
         </div>
 
         <div *ngIf="!selected && !editMode && !newGroup" class="container">
-            <br><br>
+          <br>
+          <h2 class="flexme">Groups</h2>
+            <br>
             <table mdbTable class="z-depth-1">
               <thead>
                 <tr>

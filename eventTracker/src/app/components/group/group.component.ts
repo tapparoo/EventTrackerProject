@@ -38,8 +38,14 @@ export class GroupComponent implements OnInit {
         this.groupService.showGroupUsers(this.selected.id).subscribe(
           userData => {
             this.selected.users = userData;
+            this.groupService.showGroupEvents(this.selected.id).subscribe(
+              eventData => {
+                this.selected.evts = eventData;
+              }
+            );
           }
         );
+
       },
 
       err => console.error('Observer got an error: ' + err)
@@ -82,6 +88,19 @@ export class GroupComponent implements OnInit {
     );
   }
 
+  removeFromEvent(eid: number, gid: number) {
+    this.groupService.removeGroupFromEvent(eid, gid).subscribe(
+      data => {
+        this.groupService.showGroupEvents(this.currentRoute.snapshot.paramMap.get('id')).subscribe(
+          eventData => {
+            this.selected.events = eventData;
+          }
+        );
+      },
+      err => console.error('Observer got an error: ' + err)
+    );
+  }
+
   constructor(private router: Router, private groupService: GroupService, private currentRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -92,6 +111,12 @@ export class GroupComponent implements OnInit {
           this.groupService.showGroupUsers(this.selected.id).subscribe(
             userData => {
               this.selected.users = userData;
+              this.groupService.showGroupEvents(this.selected.id).subscribe(
+                eventData => {
+                  this.selected.evts = eventData;
+
+                }
+              );
             }
           );
         },

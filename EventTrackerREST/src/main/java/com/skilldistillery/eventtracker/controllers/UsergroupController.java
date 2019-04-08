@@ -83,13 +83,13 @@ public class UsergroupController {
 	
 	@GetMapping("{id}/events")
 	public List<Event> getGroupEvents(@PathVariable("id") Integer id, HttpServletResponse resp){
-		List<Event> groups = serv.findEventsByGroupId(id);
-		if(groups.size() > 0) {
+		List<Event> events = serv.findEventsByGroupId(id);
+		if(events.size() > 0) {
 			resp.setStatus(200);
 		}else {
-			resp.setStatus(404);
+			resp.setStatus(204);
 		}
-		return groups;
+		return events;
 	}
 	
 	@PutMapping("{id}")
@@ -185,7 +185,7 @@ public class UsergroupController {
 			resp.setStatus(204);
 			removed = true;
 		}else {
-			resp.setStatus(404);
+			resp.setStatus(204);
 		}
 		return removed;
 	}

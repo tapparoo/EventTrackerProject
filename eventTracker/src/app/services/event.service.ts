@@ -37,6 +37,16 @@ export class EventService {
           );
   }
 
+  showEventGroups(id: number) {
+    return this.http.get<any>(this.url + `/${id}/groups`, this.httpOptions)
+          .pipe(
+              catchError((err: any) => {
+                console.log(err);
+                return throwError('KABOOM');
+              })
+          );
+  }
+
   update(event: Event) {
     return this.http.put<any>(this.url + `/${event.id}`, event, this.httpOptions)
     .pipe(
@@ -49,6 +59,16 @@ export class EventService {
 
   create(event: Event) {
     return this.http.post<any>(this.url, event, this.httpOptions)
+    .pipe(
+        catchError((err: any) => {
+          console.log(err);
+          return throwError('KABOOM');
+        })
+    );
+  }
+
+  removeGroupFromEvent(eid: number, gid: number) {
+    return this.http.delete<any>(this.url + `/${eid}/groups/${gid}`, this.httpOptions)
     .pipe(
         catchError((err: any) => {
           console.log(err);

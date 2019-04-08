@@ -47,6 +47,16 @@ export class GroupService {
           );
   }
 
+  showGroupEvents(id: any) {
+    return this.http.get<any[]>(this.url + `/${id}/events`, this.httpOptions)
+          .pipe(
+              catchError((err: any) => {
+                console.log(err);
+                return throwError('KABOOM');
+              })
+          );
+  }
+
   update(group: Group) {
     return this.http.put<any>(this.url + `/${group.id}`, group, this.httpOptions)
     .pipe(
@@ -79,6 +89,16 @@ export class GroupService {
 
   removeUserFromGroup(uid: number, gid: number) {
     return this.http.delete<any>(this.url + `/${gid}/users/${uid}`, this.httpOptions)
+    .pipe(
+        catchError((err: any) => {
+          console.log(err);
+          return throwError('KABOOM');
+        })
+    );
+  }
+
+  removeGroupFromEvent(gid: number, eid: number) {
+    return this.http.delete<any>(this.url + `/${gid}/events/${eid}`, this.httpOptions)
     .pipe(
         catchError((err: any) => {
           console.log(err);
