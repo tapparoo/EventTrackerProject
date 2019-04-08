@@ -3,14 +3,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Event } from '../models/event';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
 
-  private baseUrl = 'http://localhost:8082/';
-  private url = this.baseUrl + 'api/events';
+  // private baseUrl = environment.baseUrl;
+  private url = environment.baseUrl + 'api/events';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'

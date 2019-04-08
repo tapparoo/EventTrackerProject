@@ -41,3 +41,10 @@ table th {
 table td {
   border-top: 1px solid #dee2e6;
 }
+
+#clearSearch {
+  position: relative;
+  left: -15px;
+  font-size: .7em;
+  color: lightgrey;
+}

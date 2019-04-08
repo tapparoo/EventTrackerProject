@@ -215,7 +215,8 @@
     <br>
     <h2 class="flexme">Users</h2>
       <br>
-  <input type="text" placeholder="filter" #listFilter (keyup)="0">
+      <input type="text" placeholder="filter" #listFilter (keyup)="0">
+      <label id="clearSearch" for="listFilter" (click)="listFilter.value = ''">X</label>
   <br><br>
   <table mdbTable class="z-depth-1">
     <thead>

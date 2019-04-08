@@ -8,7 +8,7 @@ apply plugin: 'war'
 war {
   enabled = true
   archiveName = "${baseName}.war"     // Our app name, as defined in settings.gradle
-  destinationDir = file("./")      // project root directory
+  destinationDir = file("./WAR")      // project root directory
 }
 group = 'com.skilldistillery'
 version = '0.0.1-SNAPSHOT'

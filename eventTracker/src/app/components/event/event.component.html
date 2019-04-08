@@ -132,11 +132,12 @@
           </div>
         </div>
 
-        <div *ngIf="!selected && !editMode && !newEvent" class="container">
+        <div *ngIf="!selected && !editMode" class="container">
             <br>
           <h2 class="flexme">Events</h2>
             <br>
             <input type="text" placeholder="filter" #listFilter (keyup)="0">
+            <label id="clearSearch" for="listFilter" (click)="listFilter.value = ''">X</label>
             <br><br>
             <table mdbTable class="z-depth-1">
               <thead>

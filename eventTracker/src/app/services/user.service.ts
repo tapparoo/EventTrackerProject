@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { DatePipe } from '@angular/common';
 import { User } from '../models/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private baseUrl = 'http://localhost:8082/';
-  private url = this.baseUrl + 'api/users';
+  // private baseUrl = 'http://localhost:8082/';
+  private url = environment.baseUrl + 'api/users';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { GroupService } from 'src/app/services/group.service';
-import { Group } from 'src/app/models/group';
 
 @Component( {
   selector: 'app-group',
