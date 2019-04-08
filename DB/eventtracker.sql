@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `name` VARCHAR(45) NOT NULL,
   `description` TEXT NULL,
   `active` TINYINT UNSIGNED NOT NULL DEFAULT 1,
-  `date` DATETIME NULL,
+  `date` VARCHAR(50) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

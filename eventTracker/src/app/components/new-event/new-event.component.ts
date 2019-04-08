@@ -15,6 +15,7 @@ export class NewEventComponent implements OnInit {
   addEvent(form: NgForm) {
     this.newEvent.name = form.value.name;
     this.newEvent.description = form.value.description;
+    this.newEvent.date = form.value.date;
     this.newEvent.active = form.value.active !== false;
 
     this.eventService.create(this.newEvent).subscribe(

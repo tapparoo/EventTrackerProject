@@ -58,12 +58,15 @@
                             <div ngbDropdown class="d-inline-block">
                               <button class="btn btn-primary btn-sm" id="groupEventList" ngbDropdownToggle>Group Events:</button>
                               <div ngbDropdownMenu aria-labelledby="groupEventList">
-                                <button [routerLink]="['/events/' + event.id]" *ngFor="let event of selected.events" ngbDropdownItem>
-                                    <button (click)="removeFromEvent(selected.id, event.id)" class='redx'>X</button>
-                                    {{event.id}}: {{event.name}} - Active: {{event.active}}
-                                </button>
-                              </div>
+                                <div *ngFor="let event of selected.events" ngbDropdownItem>
+                                  <span (click)="removeFromEvent(selected.id, event.id)" class='redx'>X</span>
+                                  <span [routerLink]="['/events/' + event.id]" >
+                                      {{event.id}}: {{event.name}} - Active: {{event.active}}
+                                  </span>
+                                </div>
                             </div>
+                          </div>
+
                         </div>
                         <div class="row flexme">
                             <div>
@@ -133,17 +136,20 @@
                             </div>
                         </div>
                       <br />
-                        <div class="row flexme">
-                            <div ngbDropdown class="d-inline-block">
-                                <button class="btn btn-primary btn-sm" id="groupEventList" ngbDropdownToggle>Group Events:</button>
-                                <div ngbDropdownMenu aria-labelledby="groupEventList">
-                                  <button [routerLink]="['/events/' + evt.id]" *ngFor="let evt of selected.evts" ngbDropdownItem>
-                                      <button (click)="removeFromEvent(selected.id, evt.id)" class='redx'>X</button>
-                                      {{evt.id}}: {{evt.name}} - Active: {{evt.active}}
-                                  </button>
-                                </div>
+                      <div class="row flexme">
+                          <div ngbDropdown class="d-inline-block">
+                            <button class="btn btn-primary btn-sm" id="groupEventList" ngbDropdownToggle>Group Events:</button>
+                            <div ngbDropdownMenu aria-labelledby="groupEventList">
+                              <div *ngFor="let event of selected.events" ngbDropdownItem>
+                                <span (click)="removeFromEvent(selected.id, event.id)" class='redx'>X</span>
+                                <span [routerLink]="['/events/' + event.id]" >
+                                    {{event.id}}: {{event.name}} - Active: {{event.active}}
+                                </span>
                               </div>
+                          </div>
                         </div>
+
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -157,6 +163,8 @@
           <br>
           <h2 class="flexme">Groups</h2>
             <br>
+            <input type="text" placeholder="filter" #listFilter (keyup)="0">
+            <br><br>
             <table mdbTable class="z-depth-1">
               <thead>
                 <tr>
@@ -167,7 +175,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let group of groups" [routerLink]="['/groups/' + group.id]">
+                <tr *ngFor="let group of groups | filterGroups:listFilter.value" [routerLink]="['/groups/' + group.id]">
                   <th scope="row">{{group.id}}</th>
                   <td>{{group.name}}</td>
                   <td>{{group.description}}</td>

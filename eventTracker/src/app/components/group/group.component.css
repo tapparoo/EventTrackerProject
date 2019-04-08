@@ -14,7 +14,9 @@
 
 .redx {
 	color:red;
-	font-weight:bold;
+  font-weight:bold;
+  margin-right:10px;
+  border: thin red solid;
 }
 
 table {

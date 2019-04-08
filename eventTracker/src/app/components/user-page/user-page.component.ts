@@ -1,7 +1,7 @@
+import { FilterUsersPipe } from './../../pipes/filter-users.pipe';
 import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/app/models/user';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -31,7 +31,7 @@ export class UserPageComponent implements OnInit {
       data => {
         this.selected = data;
         this.editMode = false;
-
+        this.reload();
         this.displayUser(this.selected.id);
       },
 
@@ -79,6 +79,7 @@ export class UserPageComponent implements OnInit {
       data => {
         this.selected = null;
         this.editMode = false;
+        this.reload();
         this.router.navigateByUrl(`/users`);
       },
 
@@ -114,7 +115,9 @@ export class UserPageComponent implements OnInit {
 
   reload(): void {
       this.userService.index().subscribe(
-        data => this.users = data,
+        data => {
+          this.users = data;
+        },
 
         err => console.error('Observer got an error: ' + err)
       );

@@ -18,12 +18,16 @@ export class EventComponent implements OnInit {
     this.selected.name = form.value.name;
     this.selected.description = form.value.description;
     this.selected.active = form.value.active;
+    this.selected.date = form.value.date;
     this.selected.id = this.selected.id;
 
     this.eventService.update(this.selected).subscribe(
       data => {
         this.selected = data;
         this.editMode = false;
+        console.log(this.selected);
+        console.log(data);
+
         this.eventService.showEventGroups(this.selected.id).subscribe(
           groupData => this.selected.groups = groupData,
 

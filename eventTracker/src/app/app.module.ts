@@ -18,6 +18,9 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { NewGroupComponent } from './components/new-group/new-group.component';
 import { NewEventComponent } from './components/new-event/new-event.component';
 import { EventService } from './services/event.service';
+import { FilterUsersPipe } from './pipes/filter-users.pipe';
+import { FilterGroupsPipe } from './pipes/filter-groups.pipe';
+import { FilterEventsPipe } from './pipes/filter-events.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { EventService } from './services/event.service';
     UserPageComponent,
     NewUserComponent,
     NewGroupComponent,
-    NewEventComponent
+    NewEventComponent,
+    FilterUsersPipe,
+    FilterGroupsPipe,
+    FilterEventsPipe
   ],
   imports: [
     BrowserModule,

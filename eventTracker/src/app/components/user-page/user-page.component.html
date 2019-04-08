@@ -80,17 +80,17 @@
           </div>
           <div class="col-md-8">
             <div class="row flexme">
-                <div>
                   <div ngbDropdown class="d-inline-block">
                     <button class="btn btn-primary" id="usergroupList" ngbDropdownToggle>Member of:</button>
-                    <div ngbDropdownMenu aria-labelledby="usergroupList">
-                      <button  *ngFor="let g of selected.usergroups" [routerLink]="['/groups/' + g.id]" ngbDropdownItem>
-                          <button (click)="removeFromGroup(selected.id, g.id)" class='redx' data-toggle='tooltip' data-placement='left' title='Leave this group'>X</button>
-                          {{g.id}}: {{g.name}} - Active: {{g.active}}
-                      </button>
+                      <div ngbDropdownMenu aria-labelledby="usergroupList">
+                        <div *ngFor="let g of selected.usergroups" ngbDropdownItem>
+                          <span (click)="removeFromGroup(selected.id, g.id)" class='redx' data-toggle='tooltip' data-placement='left' title='Leave this group'>X</span>
+                          <span   [routerLink]="['/groups/' + g.id]" >
+                              {{g.id}}: {{g.name}} - Active: {{g.active}}
+                          </span>
+                      </div>
                     </div>
                   </div>
-                </div>
             </div>
             <div>
               <label for="addUserToGroup">Join Group ID:</label> <input type="text"  #addUserToGroup>
@@ -187,17 +187,17 @@
           </div>
           <div class="col-md-8">
               <div class="row flexme">
-                  <div>
-                    <div ngbDropdown class="d-inline-block">
+                  <div ngbDropdown class="d-inline-block">
                       <button class="btn btn-primary" id="usergroupList" ngbDropdownToggle>Member of:</button>
-                      <div ngbDropdownMenu aria-labelledby="usergroupList">
-                        <button  *ngFor="let g of selected.usergroups" [routerLink]="['/groups/' + g.id]" ngbDropdownItem>
-                            <button (click)="removeFromGroup(selected.id, g.id)" class='redx' data-toggle='tooltip' data-placement='left' title='Leave this group'>X</button>
-                            {{g.id}}: {{g.name}} - Active: {{g.active}}
-                        </button>
+                        <div ngbDropdownMenu aria-labelledby="usergroupList">
+                          <div *ngFor="let g of selected.usergroups" ngbDropdownItem>
+                            <span (click)="removeFromGroup(selected.id, g.id)" class='redx' data-toggle='tooltip' data-placement='left' title='Leave this group'>X</span>
+                            <span   [routerLink]="['/groups/' + g.id]" >
+                                {{g.id}}: {{g.name}} - Active: {{g.active}}
+                            </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
               </div>
               <div>
                 <label for="addUserToGroup">Join Group ID:</label> <input type="text"  #addUserToGroup>
@@ -215,6 +215,8 @@
     <br>
     <h2 class="flexme">Users</h2>
       <br>
+  <input type="text" placeholder="filter" #listFilter (keyup)="0">
+  <br><br>
   <table mdbTable class="z-depth-1">
     <thead>
       <tr>
@@ -228,7 +230,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users" [routerLink]="['/users/' + user.id]">
+      <tr *ngFor="let user of users | filterUsers:listFilter.value" [routerLink]="['/users/' + user.id]">
         <th scope="row">{{user.id}}</th>
         <td>{{user.username}}</td>
         <td>{{user.firstName}}</td>

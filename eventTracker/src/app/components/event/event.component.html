@@ -28,6 +28,12 @@
                         type="text" name="description" class="form-control" [ngModel]="selected.description"  disabled>
                     </div>
                   </div>
+                  <div class="form-row">
+                    <div class="form-event col-md-6">
+                      <label for="date">Event Date</label> <input
+                        type="text" name="date" class="form-control" [ngModel]="selected.date" disabled>
+                    </div>
+                  </div>
 
                   <div class="form-row">
                     <div class="col-md-4">
@@ -86,7 +92,12 @@
                         type="text" name="description" class="form-control" [ngModel]="selected.description" >
                     </div>
                   </div>
-
+                  <div class="form-row">
+                    <div class="form-event col-md-6">
+                      <label for="date">Event Date</label> <input
+                        type="text" name="date" class="form-control" [ngModel]="selected.date">
+                    </div>
+                  </div>
                   <div class="form-row">
                     <div class="col-md-4">
                       <div class="form-event">
@@ -125,20 +136,24 @@
             <br>
           <h2 class="flexme">Events</h2>
             <br>
+            <input type="text" placeholder="filter" #listFilter (keyup)="0">
+            <br><br>
             <table mdbTable class="z-depth-1">
               <thead>
                 <tr>
                   <th>#</th>
                   <th>Name</th>
                   <th>Description</th>
+                  <th>Date/Time</th>
                   <th>Active?</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let event of events" [routerLink]="['/events/' + event.id]">
+                <tr *ngFor="let event of events | filterEvents:listFilter.value" [routerLink]="['/events/' + event.id]">
                   <th scope="row">{{event.id}}</th>
                   <td>{{event.name}}</td>
                   <td>{{event.description}}</td>
+                  <td>{{event.date}}</td>
                   <td>{{event.active}}</td>
                 </tr>
               </tbody>

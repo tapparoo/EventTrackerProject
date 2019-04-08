@@ -1,7 +1,6 @@
 package com.skilldistillery.eventtracker;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -26,7 +25,7 @@ public class Event {
 	private String description;
 	private boolean active;
 
-	private Date date;
+	private String date;
 	
 	@JsonIgnore
 	@OneToMany(fetch=FetchType.EAGER)
@@ -97,11 +96,11 @@ public class Event {
 		this.active = active;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
