@@ -20,6 +20,8 @@ export class NewEventComponent implements OnInit {
     this.eventService.create(this.newEvent).subscribe(
       data => {
         this.newEvent = null;
+        console.log(data);
+
         this.router.navigateByUrl(`/events/${data.id}`);
       },
 

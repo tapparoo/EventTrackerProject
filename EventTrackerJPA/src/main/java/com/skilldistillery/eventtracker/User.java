@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class User {
 	@Id
@@ -35,7 +33,6 @@ public class User {
 	private boolean active;
 	private boolean admin;
 
-	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "user_usergroup", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "usergroup_id"))
 	private List<Usergroup> usergroups;

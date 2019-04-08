@@ -50,7 +50,7 @@ public class EventController {
 		if(events.size() > 0) {
 			resp.setStatus(200);
 		}else {
-			resp.setStatus(404);
+			resp.setStatus(204);
 		}
 		return events;
 	}
@@ -61,7 +61,7 @@ public class EventController {
 		if(comments.size() > 0) {
 			resp.setStatus(200);
 		}else {
-			resp.setStatus(404);
+			resp.setStatus(204);
 		}
 		return comments;
 	}
@@ -72,7 +72,7 @@ public class EventController {
 		if(groups.size() > 0) {
 			resp.setStatus(200);
 		}else {
-			resp.setStatus(404);
+			resp.setStatus(204);
 		}
 		return groups;
 	}

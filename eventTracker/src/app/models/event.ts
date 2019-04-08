@@ -4,6 +4,7 @@ export class Event {
   description: string;
   active: boolean;
   date: string;
+  groups: any[];
 
   public Event(
     id?: number,

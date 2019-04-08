@@ -97,6 +97,16 @@ export class GroupService {
     );
   }
 
+  joinGroupToEvent(eid: number, gid: number) {
+    return this.http.put<any>(this.url + `/${gid}/events/${eid}`, this.httpOptions)
+    .pipe(
+        catchError((err: any) => {
+          console.log(err);
+          return throwError('KABOOM');
+        })
+    );
+  }
+
   removeGroupFromEvent(gid: number, eid: number) {
     return this.http.delete<any>(this.url + `/${gid}/events/${eid}`, this.httpOptions)
     .pipe(

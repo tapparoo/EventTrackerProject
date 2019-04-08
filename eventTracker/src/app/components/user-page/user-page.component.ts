@@ -16,23 +16,23 @@ export class UserPageComponent implements OnInit {
   editMode = false;
 
   editUser(form: NgForm) {
-    const user = new User();
-    user.username = form.value.username;
-    user.firstName = form.value.firstName;
-    user.lastName = form.value.lastName;
-    user.email = form.value.email;
-    user.password = form.value.password;
-    user.age = form.value.age;
-    user.heightInInches = form.value.heightInInches;
-    user.weightInPounds = form.value.weightInPounds;
-    user.active = form.value.active;
-    user.admin = form.value.admin;
-    user.id = this.selected.id;
-
-    this.userService.update(user).subscribe(
+    this.selected.username = form.value.username;
+    this.selected.firstName = form.value.firstName;
+    this.selected.lastName = form.value.lastName;
+    this.selected.email = form.value.email;
+    this.selected.password = form.value.password;
+    this.selected.age = form.value.age;
+    this.selected.heightInInches = form.value.heightInInches;
+    this.selected.weightInPounds = form.value.weightInPounds;
+    this.selected.active = form.value.active;
+    this.selected.admin = form.value.admin;
+    this.selected.id = this.selected.id;
+    this.userService.update(this.selected).subscribe(
       data => {
         this.selected = data;
         this.editMode = false;
+
+        this.displayUser(this.selected.id);
       },
 
       err => console.error('Observer got an error: ' + err)
@@ -53,9 +53,19 @@ export class UserPageComponent implements OnInit {
     this.userService.showUser(id).subscribe(
       data => {
         this.selected = data;
+        if (this.selected.heightInInches > 0 && this.selected.weightInPounds > 0) {
+          const bmi = '' + (this.selected.weightInPounds
+              / (this.selected.heightInInches * this.selected.heightInInches) * 705.0);
+          if (bmi.length > 4) {
+            this.selected.bmi = bmi.substring(0, 4);
+          }
+        } else {
+          this.selected.bmi = 0.0;
+        }
+
         this.userService.showUserGroups(this.selected.id).subscribe(
           groupData => {
-            this.selected.groups = groupData;
+            this.selected.usergroups = groupData;
           }
         );
       },
@@ -81,7 +91,7 @@ export class UserPageComponent implements OnInit {
       data => {
         this.userService.showUserGroups(this.currentRoute.snapshot.paramMap.get('id')).subscribe(
           groupData => {
-            this.selected.groups = groupData;
+            this.selected.usergroups = groupData;
           }
         );
       },
@@ -94,7 +104,7 @@ export class UserPageComponent implements OnInit {
       data => {
         this.userService.showUserGroups(this.currentRoute.snapshot.paramMap.get('id')).subscribe(
           groupData => {
-            this.selected.groups = groupData;
+            this.selected.usergroups = groupData;
           }
         );
       },
@@ -118,9 +128,18 @@ export class UserPageComponent implements OnInit {
       this.userService.showUser(this.currentRoute.snapshot.paramMap.get('id')).subscribe(
         userData => {
           this.selected = userData;
+          if (this.selected.heightInInches > 0 && this.selected.weightInPounds > 0) {
+            const bmi = '' + (this.selected.weightInPounds
+                / (this.selected.heightInInches * this.selected.heightInInches) * 705.0);
+            if (bmi.length > 4) {
+              this.selected.bmi = bmi.substring(0, 4);
+            }
+          } else {
+            this.selected.bmi = 0.0;
+          }
           this.userService.showUserGroups(this.currentRoute.snapshot.paramMap.get('id')).subscribe(
             groupData => {
-              this.selected.groups = groupData;
+              this.selected.usergroups = groupData;
             }
           );
         },

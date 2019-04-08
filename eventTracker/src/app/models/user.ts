@@ -10,6 +10,7 @@ export class User {
   weightInPounds: number;
   active: boolean;
   admin: boolean;
+  usergroups: any[];
 
   public User(
     id?: number,

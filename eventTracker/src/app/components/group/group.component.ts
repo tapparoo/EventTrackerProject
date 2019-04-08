@@ -15,16 +15,17 @@ export class GroupComponent implements OnInit {
   editMode = false;
 
   editGroup(form: NgForm) {
-    const group = new Group();
-    group.name = form.value.name;
-    group.description = form.value.description;
-    group.active = form.value.active;
-    group.id = this.selected.id;
+    this.selected.name = form.value.name;
+    this.selected.description = form.value.description;
+    this.selected.active = form.value.active;
+    this.selected.id = this.selected.id;
 
-    this.groupService.update(group).subscribe(
+    this.groupService.update(this.selected).subscribe(
       data => {
         this.selected = data;
         this.editMode = false;
+
+        this.displayGroup(this.selected.id);
       },
 
       err => console.error('Observer got an error: ' + err)
@@ -38,14 +39,13 @@ export class GroupComponent implements OnInit {
         this.groupService.showGroupUsers(this.selected.id).subscribe(
           userData => {
             this.selected.users = userData;
-            this.groupService.showGroupEvents(this.selected.id).subscribe(
-              eventData => {
-                this.selected.evts = eventData;
-              }
-            );
           }
         );
-
+        this.groupService.showGroupEvents(this.selected.id).subscribe(
+          eventData => {
+            this.selected.events = eventData;
+          }
+        );
       },
 
       err => console.error('Observer got an error: ' + err)
@@ -88,6 +88,14 @@ export class GroupComponent implements OnInit {
     );
   }
 
+  joinEvent(gid: number, eid: number) {
+    this.groupService.joinGroupToEvent(eid, gid).subscribe(
+      data => this.displayGroup(gid),
+
+      err => console.error('Observer got an error: ' + err)
+    );
+  }
+
   removeFromEvent(eid: number, gid: number) {
     this.groupService.removeGroupFromEvent(eid, gid).subscribe(
       data => {
@@ -113,7 +121,7 @@ export class GroupComponent implements OnInit {
               this.selected.users = userData;
               this.groupService.showGroupEvents(this.selected.id).subscribe(
                 eventData => {
-                  this.selected.evts = eventData;
+                  this.selected.events = eventData;
 
                 }
               );

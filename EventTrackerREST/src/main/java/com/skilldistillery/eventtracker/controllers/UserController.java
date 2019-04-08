@@ -67,7 +67,6 @@ public class UserController {
 	public User modifiyUser(@PathVariable("id") Integer id, @RequestBody User modifiedUser, HttpServletResponse resp) {
 		modifiedUser.setId(id);
 		User updatedUser = null;
-
 		try {
 			updatedUser = serv.modifyUser(modifiedUser);
 		} catch (Exception e) {

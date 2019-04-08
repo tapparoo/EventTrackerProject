@@ -54,7 +54,7 @@ public class UsergroupController {
 		if(users.size() > 0) {
 			resp.setStatus(200);
 		}else {
-			resp.setStatus(404);
+			resp.setStatus(204);
 		}
 		return users;
 	}
@@ -65,7 +65,7 @@ public class UsergroupController {
 		if(users.size() > 0) {
 			resp.setStatus(200);
 		}else {
-			resp.setStatus(404);
+			resp.setStatus(204);
 		}
 		return users;
 	}
@@ -76,7 +76,7 @@ public class UsergroupController {
 		if(comments.size() > 0) {
 			resp.setStatus(200);
 		}else {
-			resp.setStatus(404);
+			resp.setStatus(204);
 		}
 		return comments;
 	}

@@ -28,7 +28,6 @@ public class Usergroup {
 	@ManyToMany(mappedBy = "usergroups")
 	private List<User> users;
 
-	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "usergroup_event", joinColumns = @JoinColumn(name = "usergroup_id"), inverseJoinColumns = @JoinColumn(name = "event_id"))
 	private List<Event> events;

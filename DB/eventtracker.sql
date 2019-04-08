@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `user_usergroup` (
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_usergroup_group`
     FOREIGN KEY (`usergroup_id`)
     REFERENCES `usergroup` (`id`)

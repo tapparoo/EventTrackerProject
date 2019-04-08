@@ -7,22 +7,31 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/users']">Users </a>
+          <div ngbDropdown class="d-inline-block">
+            <span id="Users" ngbDropdownToggle>Users</span>
+              <div ngbDropdownMenu aria-labelledby="Users">
+                <button [routerLink]="['/users']" ngbDropdownItem>All Users</button>
+                <button [routerLink]="['/newuser']" ngbDropdownItem>New User</button>
+              </div>
+          </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/newuser']">New User </a>
+          <div ngbDropdown class="d-inline-block">
+            <span id="Groups" ngbDropdownToggle>Groups</span>
+              <div ngbDropdownMenu aria-labelledby="Groups">
+                <button [routerLink]="['/groups']" ngbDropdownItem>All Groups</button>
+                <button [routerLink]="['/newgroup']" ngbDropdownItem>New Group</button>
+              </div>
+          </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/groups']">Groups</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/newgroup']">New Group </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/events']">Events</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/newevent']">New Event </a>
+          <div ngbDropdown class="d-inline-block">
+            <span id="Events" ngbDropdownToggle>Events</span>
+              <div ngbDropdownMenu aria-labelledby="Events">
+                <button [routerLink]="['/events']" ngbDropdownItem>All Events</button>
+                <button [routerLink]="['/newevent']" ngbDropdownItem>New Event</button>
+              </div>
+          </div>
         </li>
       </ul>
     </div>

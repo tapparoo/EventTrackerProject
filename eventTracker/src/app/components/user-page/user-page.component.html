@@ -51,16 +51,16 @@
           <div class="form-group col-md-3">
             <label for="height">Height(in)</label> <input type="number"
               min="0" step=".1" max="999" value="0" class="form-control"
-               name="height" disabled [ngModel]="selected.heightInInches">
+               name="heightInInches" disabled [ngModel]="selected.heightInInches">
           </div>
           <div class="form-group col-md-3">
             <label for="weight">Weight(lb)</label> <input type="number"
               min="0" step=".1" max="1000" value="0" class="form-control"
-               name="weight" disabled [ngModel]="selected.weightInPounds">
+               name="weightInPounds" disabled [ngModel]="selected.weightInPounds">
           </div>
           <div class="form-group col-md-3">
             <label for="bmi">BMI</label> <input type="text"
-              class="form-control"  name="bmi" disabled>
+              class="form-control"  name="bmi" disabled [ngModel]="selected.bmi">
           </div>
         </div>
         <div class="form-row">
@@ -84,7 +84,7 @@
                   <div ngbDropdown class="d-inline-block">
                     <button class="btn btn-primary" id="usergroupList" ngbDropdownToggle>Member of:</button>
                     <div ngbDropdownMenu aria-labelledby="usergroupList">
-                      <button  *ngFor="let g of selected.groups" [routerLink]="['/groups/' + g.id]" ngbDropdownItem>
+                      <button  *ngFor="let g of selected.usergroups" [routerLink]="['/groups/' + g.id]" ngbDropdownItem>
                           <button (click)="removeFromGroup(selected.id, g.id)" class='redx' data-toggle='tooltip' data-placement='left' title='Leave this group'>X</button>
                           {{g.id}}: {{g.name}} - Active: {{g.active}}
                       </button>
@@ -153,16 +153,16 @@
           <div class="form-group col-md-3">
             <label for="height">Height(in)</label> <input type="number"
               min="0" step=".1" max="999" value="0" class="form-control"
-               name="height" [ngModel]="selected.heightInInches">
+               name="heightInInches" [ngModel]="selected.heightInInches">
           </div>
           <div class="form-group col-md-3">
             <label for="weight">Weight(lb)</label> <input type="number"
               min="0" step=".1" max="1000" value="0" class="form-control"
-               name="weight" [ngModel]="selected.weightInPounds">
+               name="weightInPounds" [ngModel]="selected.weightInPounds">
           </div>
           <div class="form-group col-md-3">
             <label for="bmi">BMI</label> <input type="text"
-              class="form-control"  name="bmi" disabled>
+              class="form-control"  name="bmi" disabled [ngModel]="selected.bmi">
           </div>
         </div>
         <div class="form-row">
@@ -191,7 +191,7 @@
                     <div ngbDropdown class="d-inline-block">
                       <button class="btn btn-primary" id="usergroupList" ngbDropdownToggle>Member of:</button>
                       <div ngbDropdownMenu aria-labelledby="usergroupList">
-                        <button  *ngFor="let g of selected.groups" [routerLink]="['/groups/' + g.id]" ngbDropdownItem>
+                        <button  *ngFor="let g of selected.usergroups" [routerLink]="['/groups/' + g.id]" ngbDropdownItem>
                             <button (click)="removeFromGroup(selected.id, g.id)" class='redx' data-toggle='tooltip' data-placement='left' title='Leave this group'>X</button>
                             {{g.id}}: {{g.name}} - Active: {{g.active}}
                         </button>

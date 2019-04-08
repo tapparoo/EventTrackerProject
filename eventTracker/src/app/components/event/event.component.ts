@@ -15,16 +15,23 @@ export class EventComponent implements OnInit {
   editMode = false;
 
   editEvent(form: NgForm) {
-    const event = new Event();
-    event.name = form.value.name;
-    event.description = form.value.description;
-    event.active = form.value.active;
-    event.id = this.selected.id;
+    this.selected.name = form.value.name;
+    this.selected.description = form.value.description;
+    this.selected.active = form.value.active;
+    this.selected.id = this.selected.id;
 
-    this.eventService.update(event).subscribe(
+    this.eventService.update(this.selected).subscribe(
       data => {
         this.selected = data;
         this.editMode = false;
+        this.eventService.showEventGroups(this.selected.id).subscribe(
+          groupData => this.selected.groups = groupData,
+
+          err => {
+            this.router.navigateByUrl('not-found');
+            console.error('Observer got an error: ' + err);
+          });
+        this.displayEvent(this.selected.id);
       },
 
       err => console.error('Observer got an error: ' + err)
