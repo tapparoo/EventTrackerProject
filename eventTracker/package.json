@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
     "@ng-bootstrap/ng-bootstrap": "^4.1.1",
-    "angular": "^1.7.8",
+    "angular": "^1.8.0",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "querystringify": ">=2.0.0",
